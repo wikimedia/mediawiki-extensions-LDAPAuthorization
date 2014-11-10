@@ -1,0 +1,65 @@
+.TH "LDAPAuthorization" 3 "Fri Nov 7 2014" "Version 1.0" "LDAPAuthorization" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+LDAPAuthorization \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB__construct\fP ($user)"
+.br
+.ti -1c
+.RI "\fBsetConfiguration\fP ()"
+.br
+.ti -1c
+.RI "\fBgetEntries\fP ()"
+.br
+.ti -1c
+.RI "\fBevaluate\fP ()"
+.br
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBauthorize\fP (User $user, &$authorized)"
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "__construct ($user)"
+This function is used to set the passed in user to the internal user variable\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fI$user\fP User passed in through Mediawiki hook 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "static authorize (User$user, &$authorized)\fC [static]\fP"
+This function will accept a user and a boolean\&. The function will then work with the other functions in this class to determine if the user is authorized or not\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fI$user,\fP This is an instance of the MediaWiki user variable 
+.br
+\fI&$authorized\fP Boolean variable to be returned true or false depending on whether user is authorized or not 
+.RE
+.PP
+
+.SS "evaluate ()"
+This function is the top level evaluation function\&. It will look at the beginning of the rules array and call evaluateExpr to perform the rest of the authorized calculation\&. 
+.SS "getEntries ()"
+This function will use the internal variables for the LDAP server to connect with the server and query with it based off the user\&. 
+.SS "setConfiguration ()"
+This function will make sure there are global variables set in LocalSettings\&.php or PostConfiguration\&.php\&. It then sets each global variable to their local counterparts\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for LDAPAuthorization from the source code\&.

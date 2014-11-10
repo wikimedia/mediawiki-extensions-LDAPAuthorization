@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ian Campbell",
+			"Cindy Cicalese"
+		]
+	},
+	"ldapauthorization-desc": "Restrict login based on specified LDAP values."
+}

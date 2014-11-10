@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ian Campbell",
+			"Cindy Cicalese"
+		]
+	},
+	"ldapauthorization-desc": "{{desc:name=LDAPAuthorization|url=http://www.mediawiki.org/wiki/Extension/LDAPAuthorization}}"
+}
