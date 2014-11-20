@@ -5,5 +5,5 @@
 			"Cindy Cicalese"
 		]
 	},
-	"ldapauthorization-desc": "Restrict login based on specified LDAP values."
+	"ldapauthorization-desc": "Restrict login based on specified LDAP values"
 }
