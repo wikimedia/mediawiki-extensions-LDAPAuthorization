@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Metalhead64"
+		]
+	},
+	"ldapauthorization-desc": "Ermöglicht eine beschränkte Anmeldung basierend auf speziellen LDAP-Werten"
+}
