@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Liuxinyu970226"
+		]
+	},
+	"ldapauthorization-desc": "基于特定LDAP值限制登录"
+}
