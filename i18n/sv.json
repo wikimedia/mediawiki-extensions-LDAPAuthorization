@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lokal Profil"
+		]
+	},
+	"ldapauthorization-desc": "Begränsa inloggning baserat på angivna LDAP-värden"
+}
