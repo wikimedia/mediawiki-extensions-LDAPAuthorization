@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Okras"
+		]
+	},
+	"ldapauthorization-desc": "Ограничивает вход на основе указанных значений LDAP"
+}
