@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joetaras"
+		]
+	},
+	"ldapauthorization-desc": "Ristrette 'a trasute in base a valore specifice de LDAP"
+}
