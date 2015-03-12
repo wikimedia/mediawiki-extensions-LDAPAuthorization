@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Banjo"
+		]
+	},
+	"ldapauthorization-desc": "Restrinxir o acceso basándose en valores específicos de LDAP"
+}
