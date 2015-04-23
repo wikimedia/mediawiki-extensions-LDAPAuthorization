@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Xuacu"
+		]
+	},
+	"ldapauthorization-desc": "Torgar l'aniciu de sesión basándose'n valores de LDAP especificaos"
+}
