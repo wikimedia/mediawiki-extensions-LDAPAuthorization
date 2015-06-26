@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ата"
+		]
+	},
+	"ldapauthorization-desc": "Обмежує вхід на основі зазначених значень LDAP"
+}
