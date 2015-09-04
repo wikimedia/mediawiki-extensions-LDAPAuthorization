@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Otokoume"
+		]
+	},
+	"ldapauthorization-desc": "指定されたLDAP値に基づいてログインを制限します"
+}
