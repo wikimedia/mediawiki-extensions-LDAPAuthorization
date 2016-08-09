@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"ldapauthorization-desc": "Alogge limitéieren op Basis vu spezifeschen LDAP-Wäerter"
+}
