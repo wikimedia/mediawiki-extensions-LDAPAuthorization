@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Selven"
+		]
+	},
+	"ldapauthorization-desc": "Limitare l'accesso basandosi su specifici valori LDAP"
+}
