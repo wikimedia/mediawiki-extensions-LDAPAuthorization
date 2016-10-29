@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hamilton Abreu"
+		]
+	},
+	"ldapauthorization-desc": "Restringir o acesso com base em valores LDAP especificados"
+}
