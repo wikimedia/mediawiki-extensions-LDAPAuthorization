@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dgstranz"
+		]
+	},
+	"ldapauthorization-desc": "Restringir el inicio de sesión basándose en los valores LDAP especificados"
+}
