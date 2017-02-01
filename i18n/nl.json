@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Esketti"
+			"Esketti",
+			"QZanden"
 		]
 	},
-	"ldapauthorization-desc": "Beperken login op basis van de opgegeven LDAP-waarden"
+	"ldapauthorization-desc": "Beperkte login op basis van specifieke LDAP-waarden"
 }
