@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Lucky"
+			"Lucky",
+			"Urhixidur"
 		]
 	},
-	"ldapauthorization-desc": "Restreindre le login sur les valeurs LDAP spécifiées"
+	"ldapauthorization-desc": "Restreindre les connexions à des valeurs LDAP spécifiées"
 }
