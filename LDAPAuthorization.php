@@ -44,8 +44,6 @@ $GLOBALS['wgExtensionCredits']['other'][] = array (
 	'url' => 'https://mediawiki.org/wiki/Extension:LDAPAuthorization'
 );
 
-$GLOBALS['wgExensionMessagesFiles']['LDAPAuthorization'] = __DIR__ . '/LDAPAuthorization.i18n.php';
-
 $GLOBALS['wgMessagesDirs']['LDAPAuthorization'] = __DIR__ . '/i18n';
 
 $GLOBALS['wgAutoloadClasses']['LDAPAuthorization'] =
