@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"ldapauthorization-desc": "基於特定的 LDAP 值來限制登入"
+}
