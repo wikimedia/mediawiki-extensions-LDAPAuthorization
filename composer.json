@@ -1,4 +1,38 @@
 {
+	"name": "mediawiki/ldap-authorization",
+	"extra": {
+		"installer-name": "LDAPAuthorization"
+	},
+	"license": "GPL-2.0+",
+	"type": "mediawiki-extension",
+	"homepage": "https:\/\/www.mediawiki.org\/wiki\/Extension:LDAPAuthorization",
+	"description": "Allows group based authorization against a LDAP resource",
+	"keywords": [
+		"extension",
+		"wiki",
+		"mediawiki",
+		"ldap"
+	],
+	"authors": [
+		{
+			"name": "Robert Vogel",
+			"email": "vogel@hallowelt.com",
+			"role": "Developer"
+		},
+		{
+			"name": "Mark A. Hershberger",
+			"email": "mah@nichework.com",
+			"role": "Contributor"
+		},
+		{
+			"name": "Cindy Cicalese",
+			"email": "cindom@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"composer/installers": "1.*,>=1.0.1"
+	},
 	"require-dev": {
 		"jakub-onderka/php-parallel-lint": "1.0.0",
 		"jakub-onderka/php-console-highlighter": "0.3.2",
