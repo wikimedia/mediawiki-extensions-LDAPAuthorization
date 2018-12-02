@@ -29,11 +29,13 @@ class MatchAttributes implements IRequirement {
 	}
 
 	/**
-	* This function is the top level evaluation function.  It
-	* will look at the beginning of the rules array and call
-	* evaluateExpr to perform the rest of the authorized
-	* calculation.
-	*/
+	 * This function is the top level evaluation function.  It
+	 * will look at the beginning of the rules array and call
+	 * evaluateExpr to perform the rest of the authorized
+	 * calculation.
+	 *
+	 * @return bool
+	 */
 	public function isSatisfied() {
 		return $this->evaluateExpr( '&', $this->matchingRule );
 	}
@@ -46,12 +48,11 @@ class MatchAttributes implements IRequirement {
 	* @param $values: Values to check if user is authorized
 	*/
 	private function evaluateExpr( $operator, $values ) {
-
 		if ( ( $operator != '&' ) && ( $operator != '|' ) ) {
 			return false;
 		}
 
-		if ( ! is_array( $values ) || ( $values == array() ) ) {
+		if ( ! is_array( $values ) || ( $values == [] ) ) {
 			return false;
 		}
 
@@ -75,7 +76,8 @@ class MatchAttributes implements IRequirement {
 
 		if ( $operator == '&' ) {
 			return true;
-		} else { // $opertor == '|'
+		} else {
+			// $opertor == '|'
 			return false;
 		}
 	}
@@ -88,7 +90,6 @@ class MatchAttributes implements IRequirement {
 	* @param $allowedValues: Values LDAP must be equal to
 	*/
 	private function evaluateAttr( $attribute, $allowedValues ) {
-
 		if ( ! array_key_exists( $attribute, $this->attributes ) ) {
 			return false;
 		}
@@ -96,7 +97,7 @@ class MatchAttributes implements IRequirement {
 		$value = $this->attributes[$attribute][0];
 
 		if ( ! is_array( $allowedValues ) ) {
-			$allowedValues = array ( $allowedValues );
+			$allowedValues = [ $allowedValues ];
 		}
 
 		foreach ( $allowedValues as $allowedValue ) {

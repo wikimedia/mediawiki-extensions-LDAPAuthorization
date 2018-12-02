@@ -4,13 +4,14 @@ namespace MediaWiki\Extension\LDAPAuthorization\Tests\Requirement;
 
 use MediaWiki\Extension\LDAPAuthorization\Requirement\ExcludedGroups;
 
-class ExcludedGroupsTest extends \PHPUnit_Framework_TestCase {
+class ExcludedGroupsTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 *
 	 * @param array $excludedGroups
 	 * @param array $groups
 	 * @param boolean $expected
+	 * @covers MediaWiki\Extension\LDAPAuthorization\Requirement\ExcludedGroups::isSatisfied
 	 * @dataProvider provideData
 	 */
 	public function testIsSatisfied( $excludedGroups, $groups, $expected ) {

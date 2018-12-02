@@ -33,25 +33,29 @@ class PluggableAuthUserAuthorization {
 	 *
 	 * @var \Config
 	 */
-	protected $config = null;
+	protected $domainConfig = null;
 
+	/**
+	 *
+	 * @var string
+	 */
 	protected $domain = '';
 
 	/**
 	 *
 	 * @param \User $user
-	 * @param boolean $authorized
+	 * @param bool &$authorized
 	 */
 	public function __construct( $user, &$authorized ) {
 		$this->user = $user;
 		$this->authorized =& $authorized;
 
 		$this->initDomain();
-		if( $this->domain !== null ) {
+		if ( $this->domain !== null ) {
 			$this->ldapClient = ClientFactory::getInstance()->getForDomain( $this->domain );
 		}
 
-		$this->config = DomainConfigFactory::getInstance()->factory(
+		$this->domainConfig = DomainConfigFactory::getInstance()->factory(
 			$this->domain, Config::DOMAINCONFIG_SECTION
 		);
 	}
@@ -59,7 +63,8 @@ class PluggableAuthUserAuthorization {
 	/**
 	 *
 	 * @param \User $user
-	 * @param boolean $authorized
+	 * @param bool &$authorized
+	 * @return bool
 	 */
 	public static function callback( $user, &$authorized ) {
 		$handler = new static( $user, $authorized );
@@ -68,14 +73,14 @@ class PluggableAuthUserAuthorization {
 
 	/**
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function process() {
-		if( $this->isLocalUser() ) {
+		if ( $this->isLocalUser() ) {
 			return true;
 		}
-		$requirementsChecker = new RequirementsChecker( $this->ldapClient, $this->config );
-		if( !$requirementsChecker->allSatisfiedBy( $user ) ) {
+		$requirementsChecker = new RequirementsChecker( $this->ldapClient, $this->domainConfig );
+		if ( !$requirementsChecker->allSatisfiedBy( $this->user->getName() ) ) {
 			$this->authorized = false;
 			return false;
 		}
@@ -86,28 +91,28 @@ class PluggableAuthUserAuthorization {
 	/**
 	 * This hookhandler should not be invoked anyway if the user clicks on
 	 * "Login" instead of "Login with PluggableAuth"
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function isLocalUser() {
 		return $this->ldapClient === null;
 	}
 
 	protected function initDomain() {
-		if( !$this->initDomainFromAuthenticationSessionData() ) {
-			if( !$this->initDomainFromUserDomainStore() ) {
+		if ( !$this->initDomainFromAuthenticationSessionData() ) {
+			if ( !$this->initDomainFromUserDomainStore() ) {
 				$this->initDomainFromSettings();
 			}
 		}
 	}
 
 	protected function initDomainFromAuthenticationSessionData() {
-		if( !class_exists( '\MediaWiki\Extension\LDAPAuthentication\PluggableAuth' ) ) {
+		if ( !class_exists( '\MediaWiki\Extension\LDAPAuthentication\PluggableAuth' ) ) {
 			return false;
 		}
 		$domain = AuthManager::singleton()->getAuthenticationSessionData(
 			\MediaWiki\Extension\LDAPAuthentication\PluggableAuth::DOMAIN_SESSION_KEY
 		);
-		if( $domain === null ) {
+		if ( $domain === null ) {
 			return false;
 		}
 
@@ -121,7 +126,7 @@ class PluggableAuthUserAuthorization {
 		);
 		$domain = $userDomainStore->getDomainForUser( $user );
 
-		if( $domain === null ) {
+		if ( $domain === null ) {
 			return false;
 		}
 

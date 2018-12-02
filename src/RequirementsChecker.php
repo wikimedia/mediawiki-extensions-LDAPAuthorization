@@ -18,7 +18,7 @@ class RequirementsChecker {
 	 *
 	 * @var \Config
 	 */
-	protected $config = null;
+	protected $domainConfig = null;
 
 	/**
 	 *
@@ -29,23 +29,29 @@ class RequirementsChecker {
 	/**
 	 *
 	 * @param \MediaWiki\Extension\LDAPProvider\Client $ldapClient
-	 * @param \Config $config
+	 * @param \Config $domainConfig
 	 */
-	public function __construct( $ldapClient, $config ) {
+	public function __construct( $ldapClient, $domainConfig ) {
 		$this->ldapClient = $ldapClient;
-		$this->config = $config;
+		$this->domainConfig = $domainConfig;
 	}
 
 	/**
-	 * @param \User $user
-	 * @return boolean
+	 * @param string $username
+	 * @return bool
 	 */
-	public function allSatisfiedBy( $user ) {
-		$this->makeGroupRequirements( $user );
-		$this->makeMatchAttributesRequirement( $user );
+	public function allSatisfiedBy( $username ) {
+		$rules = $this->domainConfig->get( Config::RULES );
 
-		foreach( $this->requirements as $requirement ) {
-			if( !$requirement->isSatisfied() ) {
+		if ( isset( $rules[Config::RULES_GROUPS] ) ) {
+			$this->makeGroupRequirements( $username, $rules[Config::RULES_GROUPS] );
+		}
+		if ( isset( $rules[Config::RULES_ATTRIBUTES] ) ) {
+			$this->makeMatchAttributesRequirement( $username, $rules[Config::RULES_ATTRIBUTES] );
+		}
+
+		foreach ( $this->requirements as $requirement ) {
+			if ( !$requirement->isSatisfied() ) {
 				return false;
 			}
 		}
@@ -55,27 +61,23 @@ class RequirementsChecker {
 
 	/**
 	 *
-	 * @param \User $user
+	 * @param string $username
+	 * @param array $groupRules
 	 * @return void
 	 */
-	protected function makeGroupRequirements( $user ) {
-		if( !$this->config->has( Config::RULES_GROUPS ) ) {
-			return;
-		}
-
-		$ldapUserGroups = $this->ldapClient->getUserGroups( $user );
+	protected function makeGroupRequirements( $username, $groupRules ) {
+		$ldapUserGroups = $this->ldapClient->getUserGroups( $username );
 		$groupDNs = $ldapUserGroups->getFullDNs();
 
-		$groups = $this->config->get( Config::RULES_GROUPS );
-		if( isset( $groups[Config::RULES_GROUPS_REQUIRED ] ) ) {
+		if ( !empty( $groupRules[Config::RULES_GROUPS_REQUIRED ] ) ) {
 			$this->requirements[] = new RequiredGroups(
-				$groups[Config::RULES_GROUPS_REQUIRED ],
+				$groupRules[Config::RULES_GROUPS_REQUIRED ],
 				$groupDNs
 			);
 		}
-		if( isset( $groups[Config::RULES_GROUPS_EXCLUDED ] ) ) {
+		if ( !empty( $groupRules[Config::RULES_GROUPS_EXCLUDED ] ) ) {
 			$this->requirements[] = new ExcludedGroups(
-				$groups[Config::RULES_GROUPS_EXCLUDED ],
+				$groupRules[Config::RULES_GROUPS_EXCLUDED ],
 				$groupDNs
 			);
 		}
@@ -83,16 +85,14 @@ class RequirementsChecker {
 
 	/**
 	 *
-	 * @param \User $user
+	 * @param string $username
+	 * @param array $attributeRule
 	 * @return void
 	 */
-	protected function makeMatchAttributesRequirement( $user ) {
-		if( !$this->config->has( Config::RULES_ATTRIBUTES ) ) {
-			return;
+	protected function makeMatchAttributesRequirement( $username, $attributeRule ) {
+		if ( !empty( $attributeRule ) ) {
+			$userInfo = $this->ldapClient->getUserInfo( $username );
+			$this->requirements[] = new MatchAttributes( $attributeRule, $userInfo );
 		}
-		$matchRule = $this->config->get( Config::RULES_ATTRIBUTES );
-		$userInfo = $this->ldapClient->getUserInfo( $user->getName() );
-
-		$this->requirements[] = new MatchAttributes( $matchRule );
 	}
 }

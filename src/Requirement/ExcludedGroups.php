@@ -26,16 +26,15 @@ class ExcludedGroups implements IRequirement {
 	public function __construct( $excludedGroups, $groupDNs ) {
 		$this->excludedGroups = array_map( 'strtolower', $excludedGroups );
 		$this->groupDNs = array_map( 'strtolower', $groupDNs );
-
 	}
 
 	/**
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isSatisfied() {
-		foreach( $this->excludedGroups as $excludedGroup ) {
-			if( in_array( $excludedGroup, $this->groupDNs ) ) {
+		foreach ( $this->excludedGroups as $excludedGroup ) {
+			if ( in_array( $excludedGroup, $this->groupDNs ) ) {
 				return false;
 			}
 		}

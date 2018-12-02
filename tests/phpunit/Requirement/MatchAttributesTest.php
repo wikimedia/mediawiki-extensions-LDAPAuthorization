@@ -4,13 +4,14 @@ namespace MediaWiki\Extension\LDAPAuthorization\Tests\Requirement;
 
 use MediaWiki\Extension\LDAPAuthorization\Requirement\MatchAttributes;
 
-class MatchAttributesTest extends \PHPUnit_Framework_TestCase {
+class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 *
 	 * @param array $ruledefinition
 	 * @param array $attribs
 	 * @param boolean $expected
+	 * @covers MediaWiki\Extension\LDAPAuthorization\Requirement\MatchAttributes::isSatisfied
 	 * @dataProvider provideData
 	 */
 	public function testIsSatisfied( $ruledefinition, $attribs, $expected ) {

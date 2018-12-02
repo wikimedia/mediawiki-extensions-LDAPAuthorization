@@ -4,13 +4,14 @@ namespace MediaWiki\Extension\LDAPAuthorization\Tests\Requirement;
 
 use MediaWiki\Extension\LDAPAuthorization\Requirement\RequiredGroups;
 
-class RequiredGroupsTest extends \PHPUnit_Framework_TestCase {
+class RequiredGroupsTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 *
 	 * @param array $requiredGroups
 	 * @param array $groups
 	 * @param boolean $expected
+	 * @covers MediaWiki\Extension\LDAPAuthorization\Requirement\RequiredGroups::isSatisfied
 	 * @dataProvider provideData
 	 */
 	public function testIsSatisfied( $requiredGroups, $groups, $expected ) {

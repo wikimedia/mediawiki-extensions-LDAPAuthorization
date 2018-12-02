@@ -1,34 +1,26 @@
 <?php
 namespace MediaWiki\Extension\LDAPAuthorization\Hook;
 
-use MediaWiki\Extension\LDAPProvider\UserDomainStore;
 use MediaWiki\Extension\LDAPProvider\ClientFactory;
-use MediaWiki\Extension\LDAPProvider\DomainConfigFactory;
 use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
 use MediaWiki\Extension\LDAPAuthorization\Config;
+use MWException;
+use MediaWiki\Extension\LDAPAuthorization\AutoAuth\IRemoteUserStringParser;
+use GlobalVarConfig;
+use MediaWiki\Logger\LoggerFactory;
+use MediaWiki\Extension\LDAPProvider\DomainConfigFactory;
 
 /**
  * In conjunction with "Extension:Auth_remoteuser" we need to make sure that
  * only authorized users are being logged on automatically
  */
 class AuthRemoteuserFilterUserName {
+
 	/**
 	 *
 	 * @var string
 	 */
 	protected $username = '';
-
-	/**
-	 *
-	 * @var \MediaWiki\Extension\LDAPProvider\Client
-	 */
-	protected $ldapClient = null;
-
-	/**
-	 *
-	 * @var \User
-	 */
-	protected $user = null;
 
 	/**
 	 *
@@ -38,52 +30,83 @@ class AuthRemoteuserFilterUserName {
 
 	/**
 	 *
-	 * @param string $username
+	 * @var \Psr\Log\LoggerInterface
 	 */
-	public function __construct( &$username ) {
-		$this->username &= $username;
+	protected $logger = null;
 
-		$this->user = \User::newFromName( $username );
-		$userDomainStore = new UserDomainStore(
-			\MediaWiki\MediaWikiServices::getInstance()->getDBLoadBalancer()
-		);
-		$domain = $userDomainStore->getDomainForUser( $this->user );
-		if( $domain !== null ) {
-			$this->ldapClient = ClientFactory::getInstance()->getForDomain( $domain );
-		}
+	/**
+	 *
+	 * @var \BagOStuff
+	 */
+	protected $cache = null;
 
-		$this->config = DomainConfigFactory::getInstance()->factory(
-			$domain, Config::DOMAINCONFIG_SECTION
-		);
+	/**
+	 *
+	 * @param \Config $config
+	 * @param string &$username
+	 */
+	public function __construct( $config, &$username ) {
+		$this->config = $config;
+		$this->username =& $username;
+
+		$this->logger = LoggerFactory::getInstance( 'LDAPAuthorization' );
+		// TODO: Even though LPAPProvider/Client uses a cache for UserGroupsRequests,
+		// we should have an own cache here
+		$this->cache = wfGetMainCache();
 	}
 
 	/**
 	 *
-	 * @param string $username
-	 * @return boolean
+	 * @param string &$username
+	 * @return bool
 	 */
 	public static function callback( &$username ) {
-		$handler = new static( $username );
+		$config = new GlobalVarConfig( 'LDAPAuthorization' );
+		$handler = new static( $config, $username );
+
 		return $handler->process();
 	}
 
 	/**
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function process() {
-		if( $this->isLocalUser() ) {
-			return true;
+		$remoteUserStringParserKey = $this->config->get( 'AutoAuthRemoteUserStringParser' );
+		$remoteUserStringParserReg = $this->config->get( 'AutoAuthRemoteUserStringParserRegistry' );
+
+		if ( !isset( $remoteUserStringParserReg[$remoteUserStringParserKey] ) ) {
+			throw new MWException( "No factory callback for "
+				. "'$remoteUserStringParserKey' available!" );
 		}
-		$requirementsChecker = new RequirementsChecker( $this->ldapClient, $this->config );
-		if( !$requirementsChecker->allSatisfiedBy( $user ) ) {
-			return false;
+
+		$factoryCallback = $remoteUserStringParserReg[$remoteUserStringParserKey];
+		$parser = call_user_func_array( $factoryCallback, [ $this->config ] );
+
+		if ( $parser instanceof IRemoteUserStringParser === false ) {
+			throw new MWException( "Factory callback for "
+				. "'$remoteUserStringParserKey' did not return an `IRemoteUserStringParser` "
+				. "object!" );
+		}
+
+		try {
+			$desc = $parser->parse( $this->username );
+			$domain = $desc->getDomain();
+			$ldapClient = ClientFactory::getInstance()->getForDomain( $domain );
+			$domainConfig = DomainConfigFactory::getInstance()->factory(
+				$domain, Config::DOMAINCONFIG_SECTION
+			);
+
+			$requirementsChecker = new RequirementsChecker( $ldapClient, $domainConfig );
+			if ( !$requirementsChecker->allSatisfiedBy( $this->username ) ) {
+				$this->username = '';
+				return false;
+			}
+			$this->username = $desc->getUsername();
+		} catch ( MWException $ex ) {
+			$this->logger->error( "Could not check login requirements for {$this->username}" );
 		}
 
 		return true;
-	}
-
-	protected function isLocalUser() {
-		return $this->ldapClient === null;
 	}
 }
