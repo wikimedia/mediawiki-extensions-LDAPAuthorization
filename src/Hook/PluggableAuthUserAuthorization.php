@@ -124,7 +124,7 @@ class PluggableAuthUserAuthorization {
 		$userDomainStore = new UserDomainStore(
 			\MediaWiki\MediaWikiServices::getInstance()->getDBLoadBalancer()
 		);
-		$domain = $userDomainStore->getDomainForUser( $user );
+		$domain = $userDomainStore->getDomainForUser( $this->user );
 
 		if ( $domain === null ) {
 			return false;
