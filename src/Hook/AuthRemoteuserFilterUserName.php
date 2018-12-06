@@ -98,7 +98,7 @@ class AuthRemoteuserFilterUserName {
 			);
 
 			$requirementsChecker = new RequirementsChecker( $ldapClient, $domainConfig );
-			if ( !$requirementsChecker->allSatisfiedBy( $this->username ) ) {
+			if ( !$requirementsChecker->allSatisfiedBy( $desc->getUsername() ) ) {
 				$this->username = '';
 				return false;
 			}
