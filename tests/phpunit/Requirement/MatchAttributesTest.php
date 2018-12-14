@@ -86,6 +86,21 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 					'level' => [ 7 ]
 				],
 				false
+			],
+			'ucs-flag-negative-1' => [
+				[ "applicationActivated" => "TRUE" ],
+				[ "applicationActivated" => "true" ],
+				false
+			],
+			'ucs-flag-negative-2' => [
+				[ "applicationActivated" => "TRUE" ],
+				[ "applicationActivated" => 'FALSE' ],
+				false
+			],
+			'ucs-flag-positive-1' => [
+				[ "applicationActivated" => "TRUE" ],
+				[ "applicationActivated" => 'TRUE' ],
+				true
 			]
 		];
 	}

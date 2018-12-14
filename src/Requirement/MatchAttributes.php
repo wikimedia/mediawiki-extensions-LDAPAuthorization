@@ -52,7 +52,7 @@ class MatchAttributes implements IRequirement {
 			return false;
 		}
 
-		if ( ! is_array( $values ) || ( $values == [] ) ) {
+		if ( !is_array( $values ) || ( $values == [] ) ) {
 			return false;
 		}
 
@@ -94,7 +94,11 @@ class MatchAttributes implements IRequirement {
 			return false;
 		}
 
-		$value = $this->attributes[$attribute][0];
+		if ( is_array( $this->attributes[$attribute] ) ) {
+			$value = $this->attributes[$attribute][0];
+		} else {
+			$value = $this->attributes[$attribute];
+		}
 
 		if ( ! is_array( $allowedValues ) ) {
 			$allowedValues = [ $allowedValues ];
