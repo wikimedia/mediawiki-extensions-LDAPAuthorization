@@ -105,6 +105,9 @@ class AuthRemoteuserFilterUserName {
 			$this->username = $desc->getUsername();
 		} catch ( MWException $ex ) {
 			$this->logger->error( "Could not check login requirements for {$this->username}" );
+			$this->logger->error( $ex->getMessage() );
+			$this->username = '';
+			return false;
 		}
 
 		return true;
