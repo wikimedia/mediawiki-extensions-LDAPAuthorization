@@ -103,6 +103,13 @@ class AuthRemoteuserFilterUserName {
 				return false;
 			}
 			$this->username = $desc->getUsername();
+
+			$result = $ldapClient->getUserInfo( $this->username );
+			$usernameAttributeName = $ldapClient->getConfig( \MediaWiki\Extension\LDAPProvider\ClientConfig::USERINFO_USERNAME_ATTR );
+			if( isset( $result[$usernameAttributeName] ) ) {
+				$this->username = $result[$usernameAttributeName];
+			}
+
 		} catch ( MWException $ex ) {
 			$this->logger->error( "Could not check login requirements for {$this->username}" );
 			$this->logger->error( $ex->getMessage() );
