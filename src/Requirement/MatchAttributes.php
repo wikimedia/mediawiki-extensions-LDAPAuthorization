@@ -64,7 +64,7 @@ class MatchAttributes implements IRequirement {
 				$result = $this->evaluateAttr( $key, $value );
 			}
 
-			if ( ( $operator == '&' ) && ( ! $result ) ) {
+			if ( ( $operator == '&' ) && ( !$result ) ) {
 				return false;
 			}
 
@@ -90,7 +90,7 @@ class MatchAttributes implements IRequirement {
 	* @param $allowedValues: Values LDAP must be equal to
 	*/
 	private function evaluateAttr( $attribute, $allowedValues ) {
-		if ( ! array_key_exists( $attribute, $this->attributes ) ) {
+		if ( !array_key_exists( $attribute, $this->attributes ) ) {
 			return false;
 		}
 
@@ -100,7 +100,7 @@ class MatchAttributes implements IRequirement {
 			$value = $this->attributes[$attribute];
 		}
 
-		if ( ! is_array( $allowedValues ) ) {
+		if ( !is_array( $allowedValues ) ) {
 			$allowedValues = [ $allowedValues ];
 		}
 
