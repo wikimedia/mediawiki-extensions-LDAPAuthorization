@@ -53,11 +53,10 @@ class PluggableAuthUserAuthorization {
 		$this->initDomain();
 		if ( $this->domain !== null ) {
 			$this->ldapClient = ClientFactory::getInstance()->getForDomain( $this->domain );
+			$this->domainConfig = DomainConfigFactory::getInstance()->factory(
+				$this->domain, Config::DOMAINCONFIG_SECTION
+			);
 		}
-
-		$this->domainConfig = DomainConfigFactory::getInstance()->factory(
-			$this->domain, Config::DOMAINCONFIG_SECTION
-		);
 	}
 
 	/**
@@ -106,14 +105,17 @@ class PluggableAuthUserAuthorization {
 	}
 
 	protected function initDomainFromAuthenticationSessionData() {
-		if ( !class_exists( '\MediaWiki\Extension\LDAPAuthentication\PluggableAuth' ) ) {
+		if ( !class_exists( '\MediaWiki\Extension\LDAPAuthentication2\PluggableAuth' ) ) {
 			return false;
 		}
 		$domain = AuthManager::singleton()->getAuthenticationSessionData(
-			\MediaWiki\Extension\LDAPAuthentication\PluggableAuth::DOMAIN_SESSION_KEY
+			\MediaWiki\Extension\LDAPAuthentication2\PluggableAuth::DOMAIN_SESSION_KEY
 		);
 		if ( $domain === null ) {
 			return false;
+		}
+		if ( $domain === \MediaWiki\Extension\LDAPAuthentication2\ExtraLoginFields::DOMAIN_VALUE_LOCAL ) {
+			$domain = null;
 		}
 
 		$this->domain = $domain;
