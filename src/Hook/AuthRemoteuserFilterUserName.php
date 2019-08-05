@@ -1,6 +1,7 @@
 <?php
 namespace MediaWiki\Extension\LDAPAuthorization\Hook;
 
+use MediaWiki\Extension\LDAPProvider\ClientConfig;
 use MediaWiki\Extension\LDAPProvider\ClientFactory;
 use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
 use MediaWiki\Extension\LDAPAuthorization\Config;
@@ -105,8 +106,8 @@ class AuthRemoteuserFilterUserName {
 			$this->username = $desc->getUsername();
 
 			$result = $ldapClient->getUserInfo( $this->username );
-			$usernameAttributeName = $ldapClient->getConfig( \MediaWiki\Extension\LDAPProvider\ClientConfig::USERINFO_USERNAME_ATTR );
-			if( isset( $result[$usernameAttributeName] ) ) {
+			$usernameAttributeName = $ldapClient->getConfig( ClientConfig::USERINFO_USERNAME_ATTR );
+			if ( isset( $result[$usernameAttributeName] ) ) {
 				$this->username = $result[$usernameAttributeName];
 			}
 
