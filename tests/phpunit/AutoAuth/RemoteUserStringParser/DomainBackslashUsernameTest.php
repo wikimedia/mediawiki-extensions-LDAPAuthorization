@@ -4,6 +4,7 @@ namespace MediaWiki\Extension\LDAPAuthorization\Tests\AutoAuth\RemoteUserStringP
 
 use MediaWiki\Extension\LDAPAuthorization\AutoAuth\RemoteUserStringParser\DomainBackslashUsername;
 use HashConfig;
+use MWException;
 
 class DomainBackslashUsernameTest extends \PHPUnit\Framework\TestCase {
 
@@ -25,12 +26,12 @@ class DomainBackslashUsernameTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @expectedException \MWException
 	 * @covers MediaWiki\Extension\LDAPAuthorization\AutoAuth\RemoteUserStringParser\DomainBackslashUsername::parse
 	 */
 	public function testException() {
 		$config = new HashConfig( [] );
 		$parser = new DomainBackslashUsername( $config );
+		$this->expectException( MWException::class );
 		$desc = $parser->parse( "Some_user@ABC" );
 	}
 }
