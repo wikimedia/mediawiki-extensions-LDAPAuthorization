@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"BaRaN6161 TURK"
+		]
+	},
+	"ldapauthorization-desc": "Oturum açmayı belirtilen LDAP değerlerine göre sınırla"
+}
