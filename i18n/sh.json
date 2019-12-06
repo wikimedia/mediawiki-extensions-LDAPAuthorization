@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vlad5250"
+		]
+	},
+	"ldapauthorization-desc": "Ograniči prijavu na temelju naznačenih LDAP-vrijednosti"
+}
