@@ -22,7 +22,6 @@
 		"MediaWiki\\Extension\\LDAPAuthorization\\Tests\\" : "tests/phpunit/",
 		"MediaWiki\\Extension\\LDAPAuthorization\\" : "src/"
 	},
-	"callback": "MediaWiki\\Extension\\LDAPAuthorization\\Setup::onRegistration",
 	"Hooks": {
 		"PluggableAuthUserAuthorization": "MediaWiki\\Extension\\LDAPAuthorization\\Hook\\PluggableAuthUserAuthorization::callback",
 		"AuthRemoteuserFilterUserName": "MediaWiki\\Extension\\LDAPAuthorization\\Hook\\AuthRemoteuserFilterUserName::callback"
