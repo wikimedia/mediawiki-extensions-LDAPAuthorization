@@ -19,8 +19,10 @@
 		]
 	},
 	"AutoloadNamespaces": {
-		"MediaWiki\\Extension\\LDAPAuthorization\\Tests\\" : "tests/phpunit/",
 		"MediaWiki\\Extension\\LDAPAuthorization\\" : "src/"
+	},
+	"TestAutoloadNamespaces": {
+		"MediaWiki\\Extension\\LDAPAuthorization\\Tests\\" : "tests/phpunit/"
 	},
 	"callback": "MediaWiki\\Extension\\LDAPAuthorization\\Setup::onRegistration",
 	"Hooks": {
