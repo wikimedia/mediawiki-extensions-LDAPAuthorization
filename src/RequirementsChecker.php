@@ -3,8 +3,8 @@
 namespace MediaWiki\Extension\LDAPAuthorization;
 
 use MediaWiki\Extension\LDAPAuthorization\Requirement\ExcludedGroups;
-use MediaWiki\Extension\LDAPAuthorization\Requirement\RequiredGroups;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\MatchAttributes;
+use MediaWiki\Extension\LDAPAuthorization\Requirement\RequiredGroups;
 
 class RequirementsChecker {
 

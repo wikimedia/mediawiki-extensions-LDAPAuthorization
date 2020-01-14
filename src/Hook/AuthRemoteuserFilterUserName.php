@@ -1,15 +1,15 @@
 <?php
 namespace MediaWiki\Extension\LDAPAuthorization\Hook;
 
+use GlobalVarConfig;
+use MediaWiki\Extension\LDAPAuthorization\AutoAuth\IRemoteUserStringParser;
+use MediaWiki\Extension\LDAPAuthorization\Config;
+use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
 use MediaWiki\Extension\LDAPProvider\ClientConfig;
 use MediaWiki\Extension\LDAPProvider\ClientFactory;
-use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
-use MediaWiki\Extension\LDAPAuthorization\Config;
-use MWException;
-use MediaWiki\Extension\LDAPAuthorization\AutoAuth\IRemoteUserStringParser;
-use GlobalVarConfig;
-use MediaWiki\Logger\LoggerFactory;
 use MediaWiki\Extension\LDAPProvider\DomainConfigFactory;
+use MediaWiki\Logger\LoggerFactory;
+use MWException;
 
 /**
  * In conjunction with "Extension:Auth_remoteuser" we need to make sure that

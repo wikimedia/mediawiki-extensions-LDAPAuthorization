@@ -2,8 +2,8 @@
 
 namespace MediaWiki\Extension\LDAPAuthorization\Tests\AutoAuth\RemoteUserStringParser;
 
-use MediaWiki\Extension\LDAPAuthorization\AutoAuth\RemoteUserStringParser\UsernameAtDomain;
 use HashConfig;
+use MediaWiki\Extension\LDAPAuthorization\AutoAuth\RemoteUserStringParser\UsernameAtDomain;
 use MWException;
 
 class UsernameAtDomainTest extends \PHPUnit\Framework\TestCase {

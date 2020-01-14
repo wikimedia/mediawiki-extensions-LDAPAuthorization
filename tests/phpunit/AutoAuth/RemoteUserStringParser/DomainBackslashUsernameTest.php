@@ -2,8 +2,8 @@
 
 namespace MediaWiki\Extension\LDAPAuthorization\Tests\AutoAuth\RemoteUserStringParser;
 
-use MediaWiki\Extension\LDAPAuthorization\AutoAuth\RemoteUserStringParser\DomainBackslashUsername;
 use HashConfig;
+use MediaWiki\Extension\LDAPAuthorization\AutoAuth\RemoteUserStringParser\DomainBackslashUsername;
 use MWException;
 
 class DomainBackslashUsernameTest extends \PHPUnit\Framework\TestCase {

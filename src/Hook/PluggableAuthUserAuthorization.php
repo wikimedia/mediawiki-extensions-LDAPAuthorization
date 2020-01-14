@@ -2,12 +2,12 @@
 
 namespace MediaWiki\Extension\LDAPAuthorization\Hook;
 
-use MediaWiki\Extension\LDAPProvider\UserDomainStore;
+use MediaWiki\Auth\AuthManager;
+use MediaWiki\Extension\LDAPAuthorization\Config;
+use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
 use MediaWiki\Extension\LDAPProvider\ClientFactory;
 use MediaWiki\Extension\LDAPProvider\DomainConfigFactory;
-use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
-use MediaWiki\Extension\LDAPAuthorization\Config;
-use MediaWiki\Auth\AuthManager;
+use MediaWiki\Extension\LDAPProvider\UserDomainStore;
 
 class PluggableAuthUserAuthorization {
 

@@ -41,12 +41,13 @@ class MatchAttributes implements IRequirement {
 	}
 
 	/**
-	* This function will take in an operator and an array of values
-	* to check to determine whether the user is authorized or not.
-	*
-	* @param $operator: Expected '&' or '|'
-	* @param $values: Values to check if user is authorized
-	*/
+	 * This function will take in an operator and an array of values
+	 * to check to determine whether the user is authorized or not.
+	 *
+	 * @param string $operator Expected '&' or '|'
+	 * @param mixed $values Values to check if user is authorized
+	 * @return bool
+	 */
 	private function evaluateExpr( $operator, $values ) {
 		if ( ( $operator != '&' ) && ( $operator != '|' ) ) {
 			return false;
@@ -83,12 +84,13 @@ class MatchAttributes implements IRequirement {
 	}
 
 	/**
-	* This function will take in an attribute and one or more
-	* values that the user must match to be authorized.
-	*
-	* @param $attribute: LDAP result to compare with
-	* @param $allowedValues: Values LDAP must be equal to
-	*/
+	 * This function will take in an attribute and one or more
+	 * values that the user must match to be authorized.
+	 *
+	 * @param string $attribute LDAP result to compare with
+	 * @param string|array $allowedValues Values LDAP must be equal to
+	 * @return bool
+	 */
 	private function evaluateAttr( $attribute, $allowedValues ) {
 		if ( !array_key_exists( $attribute, $this->attributes ) ) {
 			return false;
