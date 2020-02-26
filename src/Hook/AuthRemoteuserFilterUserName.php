@@ -118,6 +118,16 @@ class AuthRemoteuserFilterUserName {
 			return false;
 		}
 
+		/**
+		 * this is a feature after updating wikis which used strtolower on usernames.
+		 * to use it, set this in LocalSettings.php:
+		 * $LDAPAuthentication2UsernameNormalizer = 'strtolower';
+		 */
+		$normalizer = $this->config->get( 'AutoAuthUsernameNormalizer' );
+		if ( !empty( $normalizer ) && is_callable( $normalizer ) ) {
+			$this->username = call_user_func( $normalizer, $this->username );
+		}
+
 		return true;
 	}
 }

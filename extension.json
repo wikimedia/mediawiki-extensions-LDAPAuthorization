@@ -1,6 +1,6 @@
 {
 	"name": "LDAPAuthorization",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"author": [
 		"Cindy Cicalese",
 		"[https://mediawiki.org/wiki/User:MarkAHershberger Mark A. Hershberger]",
@@ -57,6 +57,12 @@
 		},
 		"AutoAuthBypassWithCookieUsernameRemoteAddrs": {
 			"value": [ "127.0.0.1" ]
+		},
+		"AutoAuthUsernameNormalizer": {
+			"value": "",
+			"path": false,
+			"description": "Use this function for normalizing username for LDAP, for example 'strtolower'. Needed after migration from earlier Version.",
+			"public": true
 		}
 	},
 	"load_composer_autoloader" : true,
