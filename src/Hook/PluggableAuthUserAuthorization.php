@@ -108,7 +108,13 @@ class PluggableAuthUserAuthorization {
 		if ( !class_exists( '\MediaWiki\Extension\LDAPAuthentication2\PluggableAuth' ) ) {
 			return false;
 		}
-		$domain = AuthManager::singleton()->getAuthenticationSessionData(
+		if ( method_exists( MediaWikiServices::class, 'getAuthManager' ) ) {
+			// MediaWiki 1.35+
+			$authManager = MediaWikiServices::getInstance()->getAuthManager();
+		} else {
+			$authManager = AuthManager::singleton();
+		}
+		$domain = $authManager->getAuthenticationSessionData(
 			\MediaWiki\Extension\LDAPAuthentication2\PluggableAuth::DOMAIN_SESSION_KEY
 		);
 		if ( $domain === null ) {
