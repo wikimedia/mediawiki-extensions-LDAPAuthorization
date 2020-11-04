@@ -19,7 +19,7 @@ class PluggableAuthUserAuthorization {
 
 	/**
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $authorized = false;
 
