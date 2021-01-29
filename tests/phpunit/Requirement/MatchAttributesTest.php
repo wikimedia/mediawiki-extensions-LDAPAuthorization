@@ -10,7 +10,7 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 	 *
 	 * @param array $ruledefinition
 	 * @param array $attribs
-	 * @param boolean $expected
+	 * @param bool $expected
 	 * @covers MediaWiki\Extension\LDAPAuthorization\Requirement\MatchAttributes::isSatisfied
 	 * @dataProvider provideData
 	 */

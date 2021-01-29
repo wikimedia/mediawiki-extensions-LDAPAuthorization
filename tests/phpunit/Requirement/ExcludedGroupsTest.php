@@ -10,7 +10,7 @@ class ExcludedGroupsTest extends \PHPUnit\Framework\TestCase {
 	 *
 	 * @param array $excludedGroups
 	 * @param array $groups
-	 * @param boolean $expected
+	 * @param bool $expected
 	 * @covers MediaWiki\Extension\LDAPAuthorization\Requirement\ExcludedGroups::isSatisfied
 	 * @dataProvider provideData
 	 */
