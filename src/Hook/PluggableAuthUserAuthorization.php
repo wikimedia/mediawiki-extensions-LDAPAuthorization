@@ -8,6 +8,7 @@ use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
 use MediaWiki\Extension\LDAPProvider\ClientFactory;
 use MediaWiki\Extension\LDAPProvider\DomainConfigFactory;
 use MediaWiki\Extension\LDAPProvider\UserDomainStore;
+use MediaWiki\MediaWikiServices;
 
 class PluggableAuthUserAuthorization {
 
@@ -130,7 +131,7 @@ class PluggableAuthUserAuthorization {
 
 	protected function initDomainFromUserDomainStore() {
 		$userDomainStore = new UserDomainStore(
-			\MediaWiki\MediaWikiServices::getInstance()->getDBLoadBalancer()
+			MediaWikiServices::getInstance()->getDBLoadBalancer()
 		);
 		$domain = $userDomainStore->getDomainForUser( $this->user );
 
