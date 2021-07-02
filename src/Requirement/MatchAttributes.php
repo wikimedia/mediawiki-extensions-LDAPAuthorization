@@ -37,7 +37,18 @@ class MatchAttributes implements IRequirement {
 	 * @return bool
 	 */
 	public function isSatisfied() {
+		$this->normalizeAttributeKeys();
 		return $this->evaluateExpr( '&', $this->matchingRule );
+	}
+
+	private function normalizeAttributeKeys() {
+		$normalAttributes = [];
+		foreach ( $this->attributes as $key => $val ) {
+			$normalKey = strtolower( $key );
+			$normalAttributes[$normalKey] = $val;
+		}
+
+		$this->attributes = $normalAttributes;
 	}
 
 	/**
@@ -62,7 +73,8 @@ class MatchAttributes implements IRequirement {
 			if ( ( $key == '&' ) || ( $key == '|' ) ) {
 				$result = $this->evaluateExpr( $key, $value );
 			} else {
-				$result = $this->evaluateAttr( $key, $value );
+				$normalKey = strtolower( $key );
+				$result = $this->evaluateAttr( $normalKey, $value );
 			}
 
 			if ( ( $operator == '&' ) && ( !$result ) ) {

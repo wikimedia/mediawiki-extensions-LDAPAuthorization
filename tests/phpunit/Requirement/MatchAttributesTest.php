@@ -101,7 +101,46 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 				[ "applicationActivated" => "TRUE" ],
 				[ "applicationActivated" => 'TRUE' ],
 				true
-			]
+			],
+			'T280873-case-insensitivity' => [
+				[
+					'&' => [
+						'orgLOKOGeactiveerd' => true,
+						'orgLOKORechtAlias' => 'cn=Kennisdatabank,ou=rights,ou=accounts,dc=loko,dc=be'
+					]
+				],
+				[
+					'orglokogeactiveerd' => [ true ],
+					'orglokorechtalias' => 'cn=Kennisdatabank,ou=rights,ou=accounts,dc=loko,dc=be'
+				],
+				true
+			],
+			'T280873-case-insensitivity-inverse' => [
+				[
+					'&' => [
+						'orglokogeactiveerd' => true,
+						'orglokorechtalias' => 'cn=Kennisdatabank,ou=rights,ou=accounts,dc=loko,dc=be'
+					]
+				],
+				[
+					'orgLOKOGeactiveerd' => [ true ],
+					'orgLOKORechtAlias' => 'cn=Kennisdatabank,ou=rights,ou=accounts,dc=loko,dc=be'
+				],
+				true
+			],
+			'T280873-case-insensitivity-mixed' => [
+				[
+					'&' => [
+						'orglokogeactiveerd' => true,
+						'orgLOKORechtAlias' => 'cn=Kennisdatabank,ou=rights,ou=accounts,dc=loko,dc=be'
+					]
+				],
+				[
+					'orgLOKOGeactiveerd' => [ true ],
+					'orglokorechtalias' => 'cn=Kennisdatabank,ou=rights,ou=accounts,dc=loko,dc=be'
+				],
+				true
+			],
 		];
 	}
 }
