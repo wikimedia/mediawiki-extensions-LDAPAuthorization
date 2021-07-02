@@ -10,7 +10,7 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 	 *
 	 * @param array $ruledefinition
 	 * @param array $attribs
-	 * @param boolean $expected
+	 * @param bool $expected
 	 * @covers MediaWiki\Extension\LDAPAuthorization\Requirement\MatchAttributes::isSatisfied
 	 * @dataProvider provideData
 	 */
@@ -138,6 +138,117 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 				[
 					'orgLOKOGeactiveerd' => [ true ],
 					'orglokorechtalias' => 'cn=Kennisdatabank,ou=rights,ou=accounts,dc=loko,dc=be'
+				],
+				true
+			],
+			'T280875-multivalue-attributes' => [
+				[
+					'&' => [
+						'SOMEMULTIVALUEATTRIBUTE' => 'value2'
+					]
+				],
+				[
+					'SOMEMULTIVALUEATTRIBUTE' => [ 'value1', 'value2' ]
+				],
+				false
+			],
+			'T280875-multivalue-attributes-1' => [
+
+				[
+					'&' => [
+						'SOMEMULTIVALUEATTRIBUTE' => 'value2'
+					]
+				],
+				[
+					'SOMEMULTIVALUEATTRIBUTE' => [ 'value1' ]
+				],
+				false
+			],
+			'T280875-multivalue-attributes-2' => [
+				[
+					'&' => [
+						'SOMEMULTIVALUEATTRIBUTE' => [ 'value2', 'value1' ]
+					]
+				],
+				[
+					'SOMEMULTIVALUEATTRIBUTE' => [ 'value1', 'value2' ]
+				],
+				true
+			],
+			'T280875-multivalue-attributes-3' => [
+				[
+					'&' => [
+						'SOMEMULTIVALUEATTRIBUTE' => [ 'value2', 'value1', 'value3' ]
+					]
+				],
+				[
+					'SOMEMULTIVALUEATTRIBUTE' => [ 'value1', 'value2' ]
+				],
+				true
+			],
+			'T280875-multivalue-attributes-9' => [
+				[
+					'&' => [
+						'SOMEMULTIVALUEATTRIBUTE' => [ 'value2', 'value1', 'value3' ]
+					]
+				],
+				[
+					'SOMEMULTIVALUEATTRIBUTE' => [ 'value3', 'value1', 'value2' ]
+				],
+				true
+			],
+			'T280875-multivalue-attributes-4' => [
+				[
+					'&' => [
+						'SOMEMULTIVALUEATTRIBUTE' => [ 'value2', 'value1' ]
+					]
+				],
+				[
+					'SOMEMULTIVALUEATTRIBUTE' => [ 'value3', 'value1', 'value2' ]
+				],
+				false
+			],
+			'T280875-multivalue-attributes-5' => [
+				[
+					'&' => [
+						'SOMEMULTIVALUEATTRIBUTE' => [ 'value2', 'value1', 'random' ]
+					]
+				],
+				[
+					'SOMEMULTIVALUEATTRIBUTE' => [ 'value3', 'value1', 'value2' ]
+				],
+				false
+			],
+			'T280875-multivalue-attributes-6' => [
+				[
+					'&' => [
+						'SOMEMULTIVALUEATTRIBUTE' => [ 'value2', 'value1', 'random' ]
+					]
+				],
+				[
+					'SOMEMULTIVALUEATTRIBUTE' => 'value3'
+				],
+				false
+			],
+			'T280875-multivalue-attributes-7' => [
+				[
+					'|' => [
+						'SOMEMULTIVALUEATTRIBUTE' => [ 'value2', 'value1', 'random' ]
+					]
+				],
+				[
+					'SOMEMULTIVALUEATTRIBUTE' => 'value3'
+				],
+				false
+			],
+			'T280875-multivalue-attributes-8' => [
+				[
+					'|' => [
+						'SOMEMULTIVALUEATTRIBUTE' => [ 'value2', 'value1', 'random' ]
+					]
+				],
+				[
+					'SOMEMULTIVALUEATTRIBUTE' => [ 'random', 'value2' ]
 				],
 				true
 			],

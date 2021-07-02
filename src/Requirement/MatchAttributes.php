@@ -89,7 +89,7 @@ class MatchAttributes implements IRequirement {
 		if ( $operator == '&' ) {
 			return true;
 		} else {
-			// $opertor == '|'
+			// $operator == '|'
 			return false;
 		}
 	}
@@ -106,24 +106,17 @@ class MatchAttributes implements IRequirement {
 			return false;
 		}
 
-		if ( is_array( $this->attributes[$attribute] ) ) {
-			$value = $this->attributes[$attribute][0];
-		} else {
-			$value = $this->attributes[$attribute];
+		$values = $this->attributes[$attribute];
+		if ( !is_array( $values ) ) {
+			$values = [ $values ];
 		}
 
 		if ( ! is_array( $allowedValues ) ) {
 			$allowedValues = [ $allowedValues ];
 		}
 
-		foreach ( $allowedValues as $allowedValue ) {
+		$difference = array_diff( $values, $allowedValues );
 
-			if ( $value == $allowedValue ) {
-				return true;
-			}
-
-		}
-
-		return false;
+		return empty( $difference );
 	}
 }
