@@ -87,6 +87,15 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 				],
 				false
 			],
+			'example1-from-mworg-multi-dept-member' => [
+				$this->rule1,
+				[
+					'status' => [ 'active' ],
+					'department' => [ 200, 201 ],
+					'level' => [ 6 ]
+				],
+				true
+			],
 			'ucs-flag-negative-1' => [
 				[ "applicationActivated" => "TRUE" ],
 				[ "applicationActivated" => "true" ],
