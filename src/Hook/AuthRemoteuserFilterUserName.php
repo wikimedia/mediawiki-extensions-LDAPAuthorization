@@ -10,6 +10,7 @@ use MediaWiki\Extension\LDAPProvider\ClientFactory;
 use MediaWiki\Extension\LDAPProvider\DomainConfigFactory;
 use MediaWiki\Logger\LoggerFactory;
 use MWException;
+use ObjectCache;
 
 /**
  * In conjunction with "Extension:Auth_remoteuser" we need to make sure that
@@ -53,7 +54,7 @@ class AuthRemoteuserFilterUserName {
 		$this->logger = LoggerFactory::getInstance( 'LDAPAuthorization' );
 		// TODO: Even though LPAPProvider/Client uses a cache for UserGroupsRequests,
 		// we should have an own cache here
-		$this->cache = wfGetMainCache();
+		$this->cache = ObjectCache::getLocalClusterInstance();
 	}
 
 	/**
