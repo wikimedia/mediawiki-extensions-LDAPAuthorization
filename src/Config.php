@@ -9,4 +9,5 @@ class Config {
 	const RULES_GROUPS_REQUIRED = 'required';
 	const RULES_GROUPS_EXCLUDED = 'excluded';
 	const RULES_ATTRIBUTES = 'attributes';
+	const RULES_QUERY = 'query';
 }

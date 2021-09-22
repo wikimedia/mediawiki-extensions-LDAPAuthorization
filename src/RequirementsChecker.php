@@ -3,8 +3,9 @@
 namespace MediaWiki\Extension\LDAPAuthorization;
 
 use MediaWiki\Extension\LDAPAuthorization\Requirement\ExcludedGroups;
-use MediaWiki\Extension\LDAPAuthorization\Requirement\RequiredGroups;
+use MediaWiki\Extension\LDAPAuthorization\Requirement\LdapQuery;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\MatchAttributes;
+use MediaWiki\Extension\LDAPAuthorization\Requirement\RequiredGroups;
 
 class RequirementsChecker {
 
@@ -48,6 +49,9 @@ class RequirementsChecker {
 		}
 		if ( isset( $rules[Config::RULES_ATTRIBUTES] ) ) {
 			$this->makeMatchAttributesRequirement( $username, $rules[Config::RULES_ATTRIBUTES] );
+		}
+		if ( isset( $rules[Config::RULES_QUERY] ) ) {
+			$this->makeLdapQueryRequirement( $username, $rules[Config::RULES_QUERY] );
 		}
 
 		foreach ( $this->requirements as $requirement ) {
@@ -93,6 +97,19 @@ class RequirementsChecker {
 		if ( !empty( $attributeRule ) ) {
 			$userInfo = $this->ldapClient->getUserInfo( $username );
 			$this->requirements[] = new MatchAttributes( $attributeRule, $userInfo );
+		}
+	}
+
+	/**
+	 *
+	 * @param string $username
+	 * @param string $query
+	 * @return void
+	 */
+	protected function makeLdapQueryRequirement( $username, $query ) {
+		if ( !empty( $query ) ) {
+			$userdn = $this->ldapClient->getUserInfo( $username )["dn"];
+			$this->requirements[] = new LdapQuery( $this->ldapClient, $userdn, $query );
 		}
 	}
 }
