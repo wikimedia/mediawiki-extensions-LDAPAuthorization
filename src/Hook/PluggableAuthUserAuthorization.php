@@ -8,7 +8,9 @@ use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
 use MediaWiki\Extension\LDAPProvider\ClientFactory;
 use MediaWiki\Extension\LDAPProvider\DomainConfigFactory;
 use MediaWiki\Extension\LDAPProvider\UserDomainStore;
+use MediaWiki\Logger\LoggerFactory;
 use MediaWiki\MediaWikiServices;
+use Psr\Log\LoggerInterface;
 
 class PluggableAuthUserAuthorization {
 
@@ -42,6 +44,9 @@ class PluggableAuthUserAuthorization {
 	 */
 	protected $domain = '';
 
+	/** @var LoggerInterface */
+	protected $logger = null;
+
 	/**
 	 *
 	 * @param \User $user
@@ -50,8 +55,10 @@ class PluggableAuthUserAuthorization {
 	public function __construct( $user, &$authorized ) {
 		$this->user = $user;
 		$this->authorized =& $authorized;
+		$this->logger = LoggerFactory::getInstance( 'LDAPAuthorization' );
 
 		$this->initDomain();
+		$this->logger->debug( "Domain set to '{$this->domain}'." );
 		if ( $this->domain !== null ) {
 			$this->ldapClient = ClientFactory::getInstance()->getForDomain( $this->domain );
 			$this->domainConfig = DomainConfigFactory::getInstance()->factory(
@@ -76,14 +83,19 @@ class PluggableAuthUserAuthorization {
 	 * @return bool
 	 */
 	public function process() {
+		$this->logger->debug( __CLASS__ . ": Check authorization for user '{$this->user->getName()}'." );
 		if ( $this->isLocalUser() ) {
+			$this->logger->debug( 'Skipping local user.' );
 			return true;
 		}
 		$requirementsChecker = new RequirementsChecker( $this->ldapClient, $this->domainConfig );
+		$requirementsChecker->setLogger( $this->logger );
 		if ( !$requirementsChecker->allSatisfiedBy( $this->user->getName() ) ) {
+			$this->logger->debug( 'Requirements could not be satisfied.' );
 			$this->authorized = false;
 			return false;
 		}
+		$this->logger->debug( 'All requirements satisfied.' );
 
 		return true;
 	}
@@ -119,9 +131,11 @@ class PluggableAuthUserAuthorization {
 			\MediaWiki\Extension\LDAPAuthentication2\PluggableAuth::DOMAIN_SESSION_KEY
 		);
 		if ( $domain === null ) {
+			$this->logger->debug( 'No domain found for user in session.' );
 			return false;
 		}
 		if ( $domain === \MediaWiki\Extension\LDAPAuthentication2\ExtraLoginFields::DOMAIN_VALUE_LOCAL ) {
+			$this->logger->debug( 'Domain `local` chosen.' );
 			$domain = null;
 		}
 
@@ -136,6 +150,7 @@ class PluggableAuthUserAuthorization {
 		$domain = $userDomainStore->getDomainForUser( $this->user );
 
 		if ( $domain === null ) {
+			$this->logger->debug( 'No domain found for user in database.' );
 			return false;
 		}
 

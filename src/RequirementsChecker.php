@@ -6,26 +6,29 @@ use MediaWiki\Extension\LDAPAuthorization\Requirement\ExcludedGroups;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\LdapQuery;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\MatchAttributes;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\RequiredGroups;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
-class RequirementsChecker {
+class RequirementsChecker implements LoggerAwareInterface {
 
 	/**
-	 *
 	 * @var \MediaWiki\Extension\LDAPProvider\Client
 	 */
 	protected $ldapClient = null;
 
 	/**
-	 *
 	 * @var \Config
 	 */
 	protected $domainConfig = null;
 
 	/**
-	 *
 	 * @var IRequirement[]
 	 */
 	protected $requirements = [];
+
+	/** @var LoggerInterface */
+	protected $logger = null;
 
 	/**
 	 *
@@ -35,6 +38,15 @@ class RequirementsChecker {
 	public function __construct( $ldapClient, $domainConfig ) {
 		$this->ldapClient = $ldapClient;
 		$this->domainConfig = $domainConfig;
+		$this->logger = new NullLogger();
+	}
+
+	/**
+	 * @param LoggerInterface $logger
+	 * @return void
+	 */
+	public function setLogger( LoggerInterface $logger ) {
+		$this->logger = $logger;
 	}
 
 	/**
@@ -54,10 +66,12 @@ class RequirementsChecker {
 			$this->makeLdapQueryRequirement( $username, $rules[Config::RULES_QUERY] );
 		}
 
-		foreach ( $this->requirements as $requirement ) {
+		foreach ( $this->requirements as $key => $requirement ) {
 			if ( !$requirement->isSatisfied() ) {
+				$this->logger->debug( "Requirement '$key' not satisfied." );
 				return false;
 			}
+			$this->logger->debug( "Requirement '$key' satisfied." );
 		}
 
 		return true;
@@ -74,13 +88,13 @@ class RequirementsChecker {
 		$groupDNs = $ldapUserGroups->getFullDNs();
 
 		if ( !empty( $groupRules[Config::RULES_GROUPS_REQUIRED ] ) ) {
-			$this->requirements[] = new RequiredGroups(
+			$this->requirements['groups.required'] = new RequiredGroups(
 				$groupRules[Config::RULES_GROUPS_REQUIRED ],
 				$groupDNs
 			);
 		}
 		if ( !empty( $groupRules[Config::RULES_GROUPS_EXCLUDED ] ) ) {
-			$this->requirements[] = new ExcludedGroups(
+			$this->requirements['groups.excluded'] = new ExcludedGroups(
 				$groupRules[Config::RULES_GROUPS_EXCLUDED ],
 				$groupDNs
 			);
@@ -96,7 +110,7 @@ class RequirementsChecker {
 	protected function makeMatchAttributesRequirement( $username, $attributeRule ) {
 		if ( !empty( $attributeRule ) ) {
 			$userInfo = $this->ldapClient->getUserInfo( $username );
-			$this->requirements[] = new MatchAttributes( $attributeRule, $userInfo );
+			$this->requirements['attributes'] = new MatchAttributes( $attributeRule, $userInfo );
 		}
 	}
 
@@ -109,7 +123,7 @@ class RequirementsChecker {
 	protected function makeLdapQueryRequirement( $username, $query ) {
 		if ( !empty( $query ) ) {
 			$userdn = $this->ldapClient->getUserInfo( $username )["dn"];
-			$this->requirements[] = new LdapQuery( $this->ldapClient, $userdn, $query );
+			$this->requirements['query'] = new LdapQuery( $this->ldapClient, $userdn, $query );
 		}
 	}
 }
