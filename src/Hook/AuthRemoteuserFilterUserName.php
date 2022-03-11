@@ -81,25 +81,33 @@ class AuthRemoteuserFilterUserName {
 				. "object!" );
 		}
 
+		$this->logger->debug( __CLASS__ . ": Check authorization for user '{$this->username}'." );
 		try {
 			$desc = $parser->parse( $this->username );
 			$domain = $desc->getDomain();
+			$username = $desc->getUsername();
+			$this->logger->debug( "Resolved to username '{$username}' and domain '$domain'" );
+
 			$ldapClient = ClientFactory::getInstance()->getForDomain( $domain );
 			$domainConfig = DomainConfigFactory::getInstance()->factory(
 				$domain, Config::DOMAINCONFIG_SECTION
 			);
 
 			$requirementsChecker = new RequirementsChecker( $ldapClient, $domainConfig );
-			if ( !$requirementsChecker->allSatisfiedBy( $desc->getUsername() ) ) {
+			$requirementsChecker->setLogger( $this->logger );
+			if ( !$requirementsChecker->allSatisfiedBy( $username ) ) {
+				$this->logger->debug( 'Requirements could not be satisfied.' );
 				$this->username = '';
 				return false;
 			}
-			$this->username = $desc->getUsername();
+			$this->username = $username;
+			$this->logger->debug( 'All requirements satisfied.' );
 
 			$result = $ldapClient->getUserInfo( $this->username );
 			$usernameAttributeName = $ldapClient->getConfig( ClientConfig::USERINFO_USERNAME_ATTR );
 			if ( isset( $result[$usernameAttributeName] ) ) {
 				$this->username = $result[$usernameAttributeName];
+				$this->logger->debug( "Set new username '{$this->username}' from LDAP user info." );
 			}
 
 		} catch ( MWException $ex ) {
@@ -110,13 +118,14 @@ class AuthRemoteuserFilterUserName {
 		}
 
 		/**
-		 * this is a feature after updating wikis which used strtolower on usernames.
+		 * This is a feature after updating wikis which used strtolower on usernames.
 		 * to use it, set this in LocalSettings.php:
 		 * $LDAPAuthentication2UsernameNormalizer = 'strtolower';
 		 */
 		$normalizer = $this->config->get( 'AutoAuthUsernameNormalizer' );
 		if ( !empty( $normalizer ) && is_callable( $normalizer ) ) {
 			$this->username = call_user_func( $normalizer, $this->username );
+			$this->logger->debug( "Normalized username to '{$this->username}'." );
 		}
 
 		return true;
