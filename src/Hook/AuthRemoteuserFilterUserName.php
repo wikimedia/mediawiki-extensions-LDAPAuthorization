@@ -37,12 +37,6 @@ class AuthRemoteuserFilterUserName {
 
 	/**
 	 *
-	 * @var \BagOStuff
-	 */
-	protected $cache = null;
-
-	/**
-	 *
 	 * @param \Config $config
 	 * @param string &$username
 	 */
@@ -51,9 +45,6 @@ class AuthRemoteuserFilterUserName {
 		$this->username =& $username;
 
 		$this->logger = LoggerFactory::getInstance( 'LDAPAuthorization' );
-		// TODO: Even though LPAPProvider/Client uses a cache for UserGroupsRequests,
-		// we should have an own cache here
-		$this->cache = wfGetMainCache();
 	}
 
 	/**
