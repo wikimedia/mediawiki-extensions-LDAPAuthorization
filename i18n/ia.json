@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"ldapauthorization-desc": "Restringer le apertura de session a base del valores LDAP specificate"
+}
