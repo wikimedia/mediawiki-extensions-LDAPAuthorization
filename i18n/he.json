@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80"
+		]
+	},
+	"ldapauthorization-desc": "הגבלת הכניסה לפי על ערכי LDAP שצוינו"
+}
