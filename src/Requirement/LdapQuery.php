@@ -3,7 +3,6 @@
 namespace MediaWiki\Extension\LDAPAuthorization\Requirement;
 
 use MediaWiki\Extension\LDAPAuthorization\IRequirement;
-
 use MWException;
 
 /**
