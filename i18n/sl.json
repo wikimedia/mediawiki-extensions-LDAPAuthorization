@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"ldapauthorization-desc": "Omeji prijavo glede na določene vrednosti LDAP"
+}
