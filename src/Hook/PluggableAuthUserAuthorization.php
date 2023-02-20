@@ -2,7 +2,6 @@
 
 namespace MediaWiki\Extension\LDAPAuthorization\Hook;
 
-use MediaWiki\Auth\AuthManager;
 use MediaWiki\Extension\LDAPAuthorization\Config;
 use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
 use MediaWiki\Extension\LDAPProvider\ClientFactory;
@@ -121,12 +120,7 @@ class PluggableAuthUserAuthorization {
 		if ( !class_exists( '\MediaWiki\Extension\LDAPAuthentication2\PluggableAuth' ) ) {
 			return false;
 		}
-		if ( method_exists( MediaWikiServices::class, 'getAuthManager' ) ) {
-			// MediaWiki 1.35+
-			$authManager = MediaWikiServices::getInstance()->getAuthManager();
-		} else {
-			$authManager = AuthManager::singleton();
-		}
+		$authManager = MediaWikiServices::getInstance()->getAuthManager();
 		$domain = $authManager->getAuthenticationSessionData(
 			\MediaWiki\Extension\LDAPAuthentication2\PluggableAuth::DOMAIN_SESSION_KEY
 		);
