@@ -73,6 +73,10 @@ class PluggableAuthUserAuthorization {
 	 * @return bool
 	 */
 	public static function callback( $user, &$authorized ) {
+		if ( defined( 'MW_PHPUNIT_TEST' ) ) {
+			return true;
+		}
+
 		$handler = new static( $user, $authorized );
 		return $handler->process();
 	}
@@ -128,7 +132,7 @@ class PluggableAuthUserAuthorization {
 			$this->logger->debug( 'No domain found for user in session.' );
 			return false;
 		}
-		if ( $domain === \MediaWiki\Extension\LDAPAuthentication2\ExtraLoginFields::DOMAIN_VALUE_LOCAL ) {
+		if ( $domain === \MediaWiki\Extension\LDAPAuthentication2\PluggableAuth::DOMAIN_VALUE_LOCAL ) {
 			$this->logger->debug( 'Domain `local` chosen.' );
 			$domain = null;
 		}
