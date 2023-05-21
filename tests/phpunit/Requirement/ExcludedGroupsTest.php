@@ -21,7 +21,7 @@ class ExcludedGroupsTest extends \PHPUnit\Framework\TestCase {
 		$this->assertEquals( $expected, $result );
 	}
 
-	public function provideData() {
+	public static function provideData() {
 		return [
 			'positive' => [
 				[ 'X', 'Y' ],

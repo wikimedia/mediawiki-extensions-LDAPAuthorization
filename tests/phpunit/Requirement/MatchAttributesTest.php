@@ -21,7 +21,7 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 		$this->assertEquals( $expected, $result );
 	}
 
-	protected $rule1 = [
+	protected const RULE_1 = [
 			"&" => [
 					"status" => "active",
 					"|" => [
@@ -37,7 +37,7 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 			]
 	];
 
-	protected $rule2 = [
+	protected const RULE_2 = [
 			"status" => "active",
 			"|" => [
 					"department" => [
@@ -51,10 +51,10 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 			]
 	];
 
-	public function provideData() {
+	public static function provideData() {
 		return [
 			'example1-from-mworg-positive' => [
-				$this->rule1,
+				self::RULE_1,
 				[
 					'status' => [ 'active' ],
 					'department' => [ 200 ]
@@ -62,7 +62,7 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 				true
 			],
 			'example2-from-mworg-positive' => [
-				$this->rule2,
+				self::RULE_2,
 				[
 					'status' => [ 'active' ],
 					'department' => [ 500 ],
@@ -71,7 +71,7 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 				true
 			],
 			'example1-from-mworg-negative' => [
-				$this->rule1,
+				self::RULE_1,
 				[
 					'status' => [ 'inactive' ],
 					'department' => [ 200 ],
@@ -80,7 +80,7 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 				false
 			],
 			'example2-from-mworg-negative' => [
-				$this->rule2,
+				self::RULE_2,
 				[
 					'status' => [ 'active' ],
 					'level' => [ 7 ]
@@ -88,7 +88,7 @@ class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 				false
 			],
 			'example1-from-mworg-multi-dept-member' => [
-				$this->rule1,
+				self::RULE_1,
 				[
 					'status' => [ 'active' ],
 					'department' => [ 200, 201 ],
