@@ -1,6 +1,6 @@
 {
 	"name": "LDAPAuthorization",
-	"version": "1.1.1",
+	"version": "3.0.0-alpha",
 	"author": [
 		"Cindy Cicalese",
 		"[https://mediawiki.org/wiki/User:MarkAHershberger Mark A. Hershberger]",
