@@ -2,8 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Esketti",
-			"QZanden",
-			"McDutchie"
+			"McDutchie",
+			"QZanden"
 		]
 	},
 	"ldapauthorization-desc": "Aanmelding beperken op basis van de opgegeven LDAP-waarden"
