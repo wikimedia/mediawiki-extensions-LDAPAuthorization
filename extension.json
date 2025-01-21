@@ -11,7 +11,7 @@
 	"license-name": "GPL-2.0",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.39.0",
+		"MediaWiki": ">= 1.43.0",
 		"extensions": {
 			"LDAPProvider": "3.*",
 			"PluggableAuth": "7.*"
