@@ -2,19 +2,20 @@
 
 namespace MediaWiki\Extension\LDAPAuthorization\AutoAuth\RemoteUserStringParser;
 
+use MediaWiki\Config\Config;
 use MediaWiki\Extension\LDAPAuthorization\AutoAuth\IRemoteUserStringParser;
 
 abstract class Base implements IRemoteUserStringParser {
 
 	/**
 	 *
-	 * @var \Config
+	 * @var Config
 	 */
 	private $config = null;
 
 	/**
 	 *
-	 * @param \config $config
+	 * @param Config $config
 	 */
 	public function __construct( $config ) {
 		$this->config = $config;
@@ -22,7 +23,7 @@ abstract class Base implements IRemoteUserStringParser {
 
 	/**
 	 *
-	 * @param \Config $config
+	 * @param Config $config
 	 * @return IRemoteUserStringParser
 	 */
 	public static function factory( $config ) {

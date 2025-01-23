@@ -2,6 +2,7 @@
 
 namespace MediaWiki\Extension\LDAPAuthorization;
 
+use MediaWiki\Config\Config;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\ExcludedGroups;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\LdapQuery;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\MatchAttributes;
@@ -18,7 +19,7 @@ class RequirementsChecker implements LoggerAwareInterface {
 	protected $ldapClient = null;
 
 	/**
-	 * @var \Config
+	 * @var Config
 	 */
 	protected $domainConfig = null;
 
@@ -33,7 +34,7 @@ class RequirementsChecker implements LoggerAwareInterface {
 	/**
 	 *
 	 * @param \MediaWiki\Extension\LDAPProvider\Client $ldapClient
-	 * @param \Config $domainConfig
+	 * @param Config $domainConfig
 	 */
 	public function __construct( $ldapClient, $domainConfig ) {
 		$this->ldapClient = $ldapClient;

@@ -2,6 +2,7 @@
 
 namespace MediaWiki\Extension\LDAPAuthorization\Hook;
 
+use MediaWiki\Config\Config as MediaWikiConfig;
 use MediaWiki\Extension\LDAPAuthorization\Config;
 use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
 use MediaWiki\Extension\LDAPProvider\ClientFactory;
@@ -33,7 +34,7 @@ class PluggableAuthUserAuthorization {
 
 	/**
 	 *
-	 * @var \Config
+	 * @var MediaWikiConfig
 	 */
 	protected $domainConfig = null;
 
