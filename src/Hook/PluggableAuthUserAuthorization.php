@@ -10,13 +10,14 @@ use MediaWiki\Extension\LDAPProvider\DomainConfigFactory;
 use MediaWiki\Extension\LDAPProvider\UserDomainStore;
 use MediaWiki\Logger\LoggerFactory;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\User\User;
 use Psr\Log\LoggerInterface;
 
 class PluggableAuthUserAuthorization {
 
 	/**
 	 *
-	 * @var \User
+	 * @var User
 	 */
 	protected $user = null;
 
@@ -49,7 +50,7 @@ class PluggableAuthUserAuthorization {
 
 	/**
 	 *
-	 * @param \User $user
+	 * @param User $user
 	 * @param bool &$authorized
 	 */
 	public function __construct( $user, &$authorized ) {
@@ -69,7 +70,7 @@ class PluggableAuthUserAuthorization {
 
 	/**
 	 *
-	 * @param \User $user
+	 * @param User $user
 	 * @param bool &$authorized
 	 * @return bool
 	 */
