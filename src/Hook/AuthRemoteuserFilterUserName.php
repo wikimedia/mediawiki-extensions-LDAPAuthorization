@@ -2,6 +2,7 @@
 namespace MediaWiki\Extension\LDAPAuthorization\Hook;
 
 use GlobalVarConfig;
+use MediaWiki\Config\Config as MediaWikiConfig;
 use MediaWiki\Extension\LDAPAuthorization\AutoAuth\IRemoteUserStringParser;
 use MediaWiki\Extension\LDAPAuthorization\Config;
 use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
@@ -25,7 +26,7 @@ class AuthRemoteuserFilterUserName {
 
 	/**
 	 *
-	 * @var \Config
+	 * @var MediaWikiConfig
 	 */
 	protected $config = null;
 
@@ -37,7 +38,7 @@ class AuthRemoteuserFilterUserName {
 
 	/**
 	 *
-	 * @param \Config $config
+	 * @param MediaWikiConfig $config
 	 * @param string &$username
 	 */
 	public function __construct( $config, &$username ) {
