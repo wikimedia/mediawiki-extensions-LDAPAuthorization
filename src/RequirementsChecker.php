@@ -2,7 +2,7 @@
 
 namespace MediaWiki\Extension\LDAPAuthorization;
 
-use MediaWiki\Config\Config as MediaWikiConfig;;
+use MediaWiki\Config\Config as MediaWikiConfig;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\ExcludedGroups;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\LdapQuery;
 use MediaWiki\Extension\LDAPAuthorization\Requirement\MatchAttributes;
