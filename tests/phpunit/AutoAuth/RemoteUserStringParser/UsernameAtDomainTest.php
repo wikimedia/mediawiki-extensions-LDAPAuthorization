@@ -2,7 +2,7 @@
 
 namespace MediaWiki\Extension\LDAPAuthorization\Tests\AutoAuth\RemoteUserStringParser;
 
-use HashConfig;
+use MediaWiki\Config\HashConfig;
 use MediaWiki\Extension\LDAPAuthorization\AutoAuth\RemoteUserStringParser\UsernameAtDomain;
 use MWException;
 
