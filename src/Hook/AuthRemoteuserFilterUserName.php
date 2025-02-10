@@ -1,8 +1,8 @@
 <?php
 namespace MediaWiki\Extension\LDAPAuthorization\Hook;
 
-use GlobalVarConfig;
 use MediaWiki\Config\Config as MediaWikiConfig;
+use MediaWiki\Config\GlobalVarConfig;
 use MediaWiki\Extension\LDAPAuthorization\AutoAuth\IRemoteUserStringParser;
 use MediaWiki\Extension\LDAPAuthorization\Config;
 use MediaWiki\Extension\LDAPAuthorization\RequirementsChecker;
