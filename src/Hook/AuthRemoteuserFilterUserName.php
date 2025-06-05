@@ -1,6 +1,7 @@
 <?php
 namespace MediaWiki\Extension\LDAPAuthorization\Hook;
 
+use LogicException;
 use MediaWiki\Config\Config as MediaWikiConfig;
 use MediaWiki\Config\GlobalVarConfig;
 use MediaWiki\Extension\LDAPAuthorization\AutoAuth\IRemoteUserStringParser;
@@ -10,7 +11,7 @@ use MediaWiki\Extension\LDAPProvider\ClientConfig;
 use MediaWiki\Extension\LDAPProvider\ClientFactory;
 use MediaWiki\Extension\LDAPProvider\DomainConfigFactory;
 use MediaWiki\Logger\LoggerFactory;
-use MWException;
+use Throwable;
 
 /**
  * In conjunction with "Extension:Auth_remoteuser" we need to make sure that
@@ -57,13 +58,14 @@ class AuthRemoteuserFilterUserName {
 
 	/**
 	 * @return bool
+	 * @throws LogicException
 	 */
 	public function process() {
 		$remoteUserStringParserKey = $this->config->get( 'AutoAuthRemoteUserStringParser' );
 		$remoteUserStringParserReg = $this->config->get( 'AutoAuthRemoteUserStringParserRegistry' );
 
 		if ( !isset( $remoteUserStringParserReg[$remoteUserStringParserKey] ) ) {
-			throw new MWException( "No factory callback for "
+			throw new LogicException( "No factory callback for "
 				. "'$remoteUserStringParserKey' available!" );
 		}
 
@@ -71,7 +73,7 @@ class AuthRemoteuserFilterUserName {
 		$parser = call_user_func_array( $factoryCallback, [ $this->config ] );
 
 		if ( $parser instanceof IRemoteUserStringParser === false ) {
-			throw new MWException( "Factory callback for "
+			throw new LogicException( "Factory callback for "
 				. "'$remoteUserStringParserKey' did not return an `IRemoteUserStringParser` "
 				. "object!" );
 		}
@@ -105,7 +107,7 @@ class AuthRemoteuserFilterUserName {
 				$this->logger->debug( "Set new username '{$this->username}' from LDAP user info." );
 			}
 
-		} catch ( MWException $ex ) {
+		} catch ( Throwable $ex ) {
 			$this->logger->error( "Could not check login requirements for {$this->username}" );
 			$this->logger->error( $ex->getMessage() );
 			$this->username = '';

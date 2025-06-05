@@ -2,9 +2,9 @@
 
 namespace MediaWiki\Extension\LDAPAuthorization\Tests\AutoAuth\RemoteUserStringParser;
 
+use InvalidArgumentException;
 use MediaWiki\Config\HashConfig;
 use MediaWiki\Extension\LDAPAuthorization\AutoAuth\RemoteUserStringParser\DomainBackslashUsername;
-use MWException;
 
 class DomainBackslashUsernameTest extends \PHPUnit\Framework\TestCase {
 
@@ -31,7 +31,7 @@ class DomainBackslashUsernameTest extends \PHPUnit\Framework\TestCase {
 	public function testException() {
 		$config = new HashConfig( [] );
 		$parser = new DomainBackslashUsername( $config );
-		$this->expectException( MWException::class );
+		$this->expectException( InvalidArgumentException::class );
 		$desc = $parser->parse( "Some_user@ABC" );
 	}
 }

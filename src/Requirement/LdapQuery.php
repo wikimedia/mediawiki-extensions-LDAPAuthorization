@@ -3,7 +3,7 @@
 namespace MediaWiki\Extension\LDAPAuthorization\Requirement;
 
 use MediaWiki\Extension\LDAPAuthorization\IRequirement;
-use MWException;
+use Throwable;
 
 /**
  * A requirement that checks if the user matches a given LDAP query.
@@ -46,7 +46,7 @@ class LdapQuery implements IRequirement {
 				$this->userdn,
 				[ "dn" ]
 			);
-		} catch ( MWException $e ) {
+		} catch ( Throwable $e ) {
 			# For example a malformed query in the configuration.
 			wfDebugLog(
 				"LDAPAuthorization", "Could not check user against LDAP query: " . $e->getMessage()
