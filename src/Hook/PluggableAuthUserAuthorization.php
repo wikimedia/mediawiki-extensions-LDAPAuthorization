@@ -16,31 +16,26 @@ use Psr\Log\LoggerInterface;
 class PluggableAuthUserAuthorization {
 
 	/**
-	 *
 	 * @var User
 	 */
 	protected $user = null;
 
 	/**
-	 *
 	 * @var bool
 	 */
 	protected $authorized = false;
 
 	/**
-	 *
 	 * @var \MediaWiki\Extension\LDAPProvider\Client
 	 */
 	protected $ldapClient = null;
 
 	/**
-	 *
 	 * @var MediaWikiConfig
 	 */
 	protected $domainConfig = null;
 
 	/**
-	 *
 	 * @var string
 	 */
 	protected $domain = '';
@@ -49,7 +44,6 @@ class PluggableAuthUserAuthorization {
 	protected $logger = null;
 
 	/**
-	 *
 	 * @param User $user
 	 * @param bool &$authorized
 	 */
@@ -69,7 +63,6 @@ class PluggableAuthUserAuthorization {
 	}
 
 	/**
-	 *
 	 * @param User $user
 	 * @param bool &$authorized
 	 * @return bool
@@ -84,7 +77,6 @@ class PluggableAuthUserAuthorization {
 	}
 
 	/**
-	 *
 	 * @return bool
 	 */
 	public function process() {

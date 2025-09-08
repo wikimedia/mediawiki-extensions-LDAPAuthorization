@@ -7,19 +7,16 @@ use MediaWiki\Extension\LDAPAuthorization\IRequirement;
 class MatchAttributes implements IRequirement {
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $matchingRule = [];
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $attributes = [];
 
 	/**
-	 *
 	 * @param array $matchingRule
 	 * @param array $attributes
 	 */

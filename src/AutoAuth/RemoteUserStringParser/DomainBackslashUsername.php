@@ -8,7 +8,6 @@ use MWException;
 class DomainBackslashUsername extends Base {
 
 	/**
-	 *
 	 * @param string $remoteUserString
 	 * @return \MediaWiki\Extension\LDAPAuthorization\AutoAuth\IDomainUserDescription
 	 */

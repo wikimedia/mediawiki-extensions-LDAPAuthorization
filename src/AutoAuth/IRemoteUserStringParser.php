@@ -5,7 +5,6 @@ namespace MediaWiki\Extension\LDAPAuthorization\AutoAuth;
 interface IRemoteUserStringParser {
 
 	/**
-	 *
 	 * @param string $remoteUserString
 	 * @return IDomainUserDescription
 	 */

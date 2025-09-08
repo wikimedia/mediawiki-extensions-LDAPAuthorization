@@ -11,25 +11,21 @@ use MWException;
 class LdapQuery implements IRequirement {
 
 	/**
-	 *
 	 * @var \MediaWiki\Extension\LDAPProvider\Client
 	 */
 	protected $ldapClient = null;
 
 	/**
-	 *
 	 * @var string
 	 */
 	protected $userdn = null;
 
 	/**
-	 *
 	 * @var string
 	 */
 	protected $query = null;
 
 	/**
-	 *
 	 * @param \MediaWiki\Extension\LDAPProvider\Client $ldapClient
 	 * @param string $userdn
 	 * @param string $query
@@ -41,7 +37,6 @@ class LdapQuery implements IRequirement {
 	}
 
 	/**
-	 *
 	 * @return bool
 	 */
 	public function isSatisfied() {

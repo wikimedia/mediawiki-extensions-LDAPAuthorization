@@ -5,19 +5,16 @@ namespace MediaWiki\Extension\LDAPAuthorization\AutoAuth;
 class SimpleDomainUserDescription implements IDomainUserDescription {
 
 	/**
-	 *
 	 * @var string
 	 */
 	private $username = '';
 
 	/**
-	 *
 	 * @var string
 	 */
 	private $domain = '';
 
 	/**
-	 *
 	 * @param string $username
 	 * @param string $domain
 	 */
@@ -27,7 +24,6 @@ class SimpleDomainUserDescription implements IDomainUserDescription {
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
 	public function getDomain() {
@@ -35,7 +31,6 @@ class SimpleDomainUserDescription implements IDomainUserDescription {
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
 	public function getUsername() {

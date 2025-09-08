@@ -7,19 +7,16 @@ use MediaWiki\Extension\LDAPAuthorization\IRequirement;
 class ExcludedGroups implements IRequirement {
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $excludedGroups = [];
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $groupDNs = [];
 
 	/**
-	 *
 	 * @param array $excludedGroups
 	 * @param array $groupDNs
 	 */
@@ -29,7 +26,6 @@ class ExcludedGroups implements IRequirement {
 	}
 
 	/**
-	 *
 	 * @return bool
 	 */
 	public function isSatisfied() {

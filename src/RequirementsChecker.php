@@ -32,7 +32,6 @@ class RequirementsChecker implements LoggerAwareInterface {
 	protected $logger = null;
 
 	/**
-	 *
 	 * @param \MediaWiki\Extension\LDAPProvider\Client $ldapClient
 	 * @param MediaWikiConfig $domainConfig
 	 */
@@ -79,7 +78,6 @@ class RequirementsChecker implements LoggerAwareInterface {
 	}
 
 	/**
-	 *
 	 * @param string $username
 	 * @param array $groupRules
 	 * @return void
@@ -103,7 +101,6 @@ class RequirementsChecker implements LoggerAwareInterface {
 	}
 
 	/**
-	 *
 	 * @param string $username
 	 * @param array $attributeRule
 	 * @return void
@@ -116,7 +113,6 @@ class RequirementsChecker implements LoggerAwareInterface {
 	}
 
 	/**
-	 *
 	 * @param string $username
 	 * @param string $query
 	 * @return void

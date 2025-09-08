@@ -7,7 +7,6 @@ use MediaWiki\Extension\LDAPAuthorization\Requirement\ExcludedGroups;
 class ExcludedGroupsTest extends \PHPUnit\Framework\TestCase {
 
 	/**
-	 *
 	 * @param array $excludedGroups
 	 * @param array $groups
 	 * @param bool $expected
