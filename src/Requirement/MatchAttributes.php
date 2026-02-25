@@ -3,8 +3,11 @@
 namespace MediaWiki\Extension\LDAPAuthorization\Requirement;
 
 use MediaWiki\Extension\LDAPAuthorization\IRequirement;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
-class MatchAttributes implements IRequirement {
+class MatchAttributes implements IRequirement, LoggerAwareInterface {
 
 	/**
 	 * @var array
@@ -17,12 +20,26 @@ class MatchAttributes implements IRequirement {
 	protected $attributes = [];
 
 	/**
+	 * @var LoggerInterface
+	 */
+	protected $logger = null;
+
+	/**
 	 * @param array $matchingRule
 	 * @param array $attributes
 	 */
 	public function __construct( $matchingRule, $attributes ) {
 		$this->matchingRule = $matchingRule;
 		$this->attributes = $attributes;
+		$this->logger = new NullLogger();
+	}
+
+	/**
+	 * @param LoggerInterface $logger
+	 * @return void
+	 */
+	public function setLogger( LoggerInterface $logger ): void {
+		$this->logger = $logger;
 	}
 
 	/**
@@ -102,6 +119,7 @@ class MatchAttributes implements IRequirement {
 	 */
 	private function evaluateAttr( $attribute, $allowedValues ) {
 		if ( !array_key_exists( $attribute, $this->attributes ) ) {
+			$this->logger->debug( 'Attribute {attribute} not present in user info.', [ 'attribute' => $attribute ] );
 			return false;
 		}
 
@@ -118,11 +136,21 @@ class MatchAttributes implements IRequirement {
 		foreach ( $allowedValues as $allowedValue ) {
 
 			if ( $value == $allowedValue ) {
+				$this->logger->debug( 'Attribute {attribute} matches value {value}.',
+					[ 'attribute' => $attribute, 'value' => $allowedValue ] );
 				return true;
 			}
 
 		}
 
+		$this->logger->debug(
+			"Attribute {attribute} value {value} does not match any of: [ '{allowed}' ].",
+			[
+				'attribute' => $attribute,
+				'value' => $value,
+				'allowed' => implode( "', '", $allowedValues ),
+			]
+		);
 		return false;
 	}
 }

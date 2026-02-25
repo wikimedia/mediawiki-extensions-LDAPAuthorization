@@ -56,22 +56,34 @@ class RequirementsChecker implements LoggerAwareInterface {
 	public function allSatisfiedBy( $username ) {
 		$rules = $this->domainConfig->get( Config::RULES );
 
-		if ( isset( $rules[Config::RULES_GROUPS] ) ) {
-			$this->makeGroupRequirements( $username, $rules[Config::RULES_GROUPS] );
-		}
-		if ( isset( $rules[Config::RULES_ATTRIBUTES] ) ) {
-			$this->makeMatchAttributesRequirement( $username, $rules[Config::RULES_ATTRIBUTES] );
-		}
-		if ( isset( $rules[Config::RULES_QUERY] ) ) {
-			$this->makeLdapQueryRequirement( $username, $rules[Config::RULES_QUERY] );
+		try {
+			if ( isset( $rules[Config::RULES_GROUPS] ) ) {
+				$this->makeGroupRequirements( $username, $rules[Config::RULES_GROUPS] );
+			}
+			if ( isset( $rules[Config::RULES_ATTRIBUTES] ) ) {
+				$this->makeMatchAttributesRequirement( $username, $rules[Config::RULES_ATTRIBUTES] );
+			}
+			if ( isset( $rules[Config::RULES_QUERY] ) ) {
+				$this->makeLdapQueryRequirement( $username, $rules[Config::RULES_QUERY] );
+			}
+		} catch ( \Throwable $e ) {
+			$this->logger->error(
+				'Failed to build authorization requirements for {username}, {exception}: {message}',
+				[
+					'username' => $username,
+					'exception' => get_class( $e ),
+					'message' => $e->getMessage(),
+				]
+			);
+			return false;
 		}
 
 		foreach ( $this->requirements as $key => $requirement ) {
 			if ( !$requirement->isSatisfied() ) {
-				$this->logger->debug( "Requirement '$key' not satisfied." );
+				$this->logger->debug( 'Requirement {key} not satisfied.', [ 'key' => $key ] );
 				return false;
 			}
-			$this->logger->debug( "Requirement '$key' satisfied." );
+			$this->logger->debug( 'Requirement {key} satisfied.', [ 'key' => $key ] );
 		}
 
 		return true;
@@ -86,17 +98,28 @@ class RequirementsChecker implements LoggerAwareInterface {
 		$ldapUserGroups = $this->ldapClient->getUserGroups( $username );
 		$groupDNs = $ldapUserGroups->getFullDNs();
 
+		$this->logger->debug(
+			'User {username} is member of {count} LDAP group(s).',
+			[ 'username' => $username, 'count' => count( $groupDNs ) ]
+		);
+
 		if ( !empty( $groupRules[Config::RULES_GROUPS_REQUIRED ] ) ) {
-			$this->requirements['groups.required'] = new RequiredGroups(
+			$req = new RequiredGroups(
 				$groupRules[Config::RULES_GROUPS_REQUIRED ],
 				$groupDNs
 			);
+			$req->setLogger( $this->logger );
+
+			$this->requirements['groups.required'] = $req;
 		}
 		if ( !empty( $groupRules[Config::RULES_GROUPS_EXCLUDED ] ) ) {
-			$this->requirements['groups.excluded'] = new ExcludedGroups(
+			$req = new ExcludedGroups(
 				$groupRules[Config::RULES_GROUPS_EXCLUDED ],
 				$groupDNs
 			);
+			$req->setLogger( $this->logger );
+
+			$this->requirements['groups.excluded'] = $req;
 		}
 	}
 
@@ -108,7 +131,11 @@ class RequirementsChecker implements LoggerAwareInterface {
 	protected function makeMatchAttributesRequirement( $username, $attributeRule ) {
 		if ( !empty( $attributeRule ) ) {
 			$userInfo = $this->ldapClient->getUserInfo( $username );
-			$this->requirements['attributes'] = new MatchAttributes( $attributeRule, $userInfo );
+
+			$req = new MatchAttributes( $attributeRule, $userInfo );
+			$req->setLogger( $this->logger );
+
+			$this->requirements['attributes'] = $req;
 		}
 	}
 
@@ -120,7 +147,11 @@ class RequirementsChecker implements LoggerAwareInterface {
 	protected function makeLdapQueryRequirement( $username, $query ) {
 		if ( !empty( $query ) ) {
 			$userdn = $this->ldapClient->getUserInfo( $username )["dn"];
-			$this->requirements['query'] = new LdapQuery( $this->ldapClient, $userdn, $query );
+
+			$req = new LdapQuery( $this->ldapClient, $userdn, $query );
+			$req->setLogger( $this->logger );
+
+			$this->requirements['query'] = $req;
 		}
 	}
 }
