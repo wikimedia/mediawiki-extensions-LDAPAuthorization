@@ -161,5 +161,10 @@ class PluggableAuthUserAuthorization {
 	protected function initDomainFromSettings() {
 		$configuredDomains = DomainConfigFactory::getInstance()->getConfiguredDomains();
 		$this->domain = $configuredDomains[0];
+
+		$this->logger->debug(
+			'No domain found in session or database; falling back to first configured domain: {domain}.',
+			[ 'domain' => $this->domain ]
+		);
 	}
 }
