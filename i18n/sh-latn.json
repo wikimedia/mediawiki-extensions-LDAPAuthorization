@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Winston Sung"
+			"Winston Sung",
+			"Aca"
 		]
 	},
-	"ldapauthorization-desc": "Ograniči prijavu na temelju naznačenih LDAP-vrijednosti"
+	"ldapauthorization-desc": "Ograniči prijavu na temelju naznačenih LDAP vrijednosti"
 }
