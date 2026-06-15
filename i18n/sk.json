@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wizzard"
+		]
+	},
+	"ldapauthorization-desc": "Obmedzuje prihlásenie na základe určených hodnôt LDAP"
+}
