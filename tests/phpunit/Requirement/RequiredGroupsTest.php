@@ -7,7 +7,6 @@ use MediaWiki\Extension\LDAPAuthorization\Requirement\RequiredGroups;
 class RequiredGroupsTest extends \PHPUnit\Framework\TestCase {
 
 	/**
-	 *
 	 * @param array $requiredGroups
 	 * @param array $groups
 	 * @param bool $expected

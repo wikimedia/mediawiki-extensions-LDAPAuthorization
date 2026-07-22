@@ -20,25 +20,21 @@ use Throwable;
 class AuthRemoteuserFilterUserName {
 
 	/**
-	 *
 	 * @var string
 	 */
 	protected $username = '';
 
 	/**
-	 *
 	 * @var MediaWikiConfig
 	 */
 	protected $config = null;
 
 	/**
-	 *
 	 * @var \Psr\Log\LoggerInterface
 	 */
 	protected $logger = null;
 
 	/**
-	 *
 	 * @param MediaWikiConfig $config
 	 * @param string &$username
 	 */
@@ -50,7 +46,6 @@ class AuthRemoteuserFilterUserName {
 	}
 
 	/**
-	 *
 	 * @param string &$username
 	 * @return bool
 	 */

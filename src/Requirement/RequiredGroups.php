@@ -10,13 +10,11 @@ use Psr\Log\NullLogger;
 class RequiredGroups implements IRequirement, LoggerAwareInterface {
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $requiredGroups = [];
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $groupDNs = [];
@@ -27,7 +25,6 @@ class RequiredGroups implements IRequirement, LoggerAwareInterface {
 	protected $logger = null;
 
 	/**
-	 *
 	 * @param array $requiredGroups
 	 * @param array $groupDNs
 	 */
@@ -46,7 +43,6 @@ class RequiredGroups implements IRequirement, LoggerAwareInterface {
 	}
 
 	/**
-	 *
 	 * @return bool
 	 */
 	public function isSatisfied() {

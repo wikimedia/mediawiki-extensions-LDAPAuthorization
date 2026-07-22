@@ -8,13 +8,11 @@ use MediaWiki\Extension\LDAPAuthorization\AutoAuth\IRemoteUserStringParser;
 abstract class Base implements IRemoteUserStringParser {
 
 	/**
-	 *
 	 * @var Config
 	 */
 	private $config = null;
 
 	/**
-	 *
 	 * @param Config $config
 	 */
 	public function __construct( $config ) {
@@ -22,7 +20,6 @@ abstract class Base implements IRemoteUserStringParser {
 	}
 
 	/**
-	 *
 	 * @param Config $config
 	 * @return IRemoteUserStringParser
 	 */

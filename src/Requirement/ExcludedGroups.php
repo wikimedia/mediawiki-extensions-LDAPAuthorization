@@ -10,13 +10,11 @@ use Psr\Log\NullLogger;
 class ExcludedGroups implements IRequirement, LoggerAwareInterface {
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $excludedGroups = [];
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $groupDNs = [];
@@ -27,7 +25,6 @@ class ExcludedGroups implements IRequirement, LoggerAwareInterface {
 	protected $logger = null;
 
 	/**
-	 *
 	 * @param array $excludedGroups
 	 * @param array $groupDNs
 	 */
@@ -46,7 +43,6 @@ class ExcludedGroups implements IRequirement, LoggerAwareInterface {
 	}
 
 	/**
-	 *
 	 * @return bool
 	 */
 	public function isSatisfied() {

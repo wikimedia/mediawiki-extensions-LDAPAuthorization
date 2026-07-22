@@ -10,13 +10,11 @@ use Psr\Log\NullLogger;
 class MatchAttributes implements IRequirement, LoggerAwareInterface {
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $matchingRule = [];
 
 	/**
-	 *
 	 * @var array
 	 */
 	protected $attributes = [];
@@ -27,7 +25,6 @@ class MatchAttributes implements IRequirement, LoggerAwareInterface {
 	protected $logger = null;
 
 	/**
-	 *
 	 * @param array $matchingRule
 	 * @param array $attributes
 	 */

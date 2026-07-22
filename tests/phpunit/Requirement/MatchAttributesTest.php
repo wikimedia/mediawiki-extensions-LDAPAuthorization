@@ -7,7 +7,6 @@ use MediaWiki\Extension\LDAPAuthorization\Requirement\MatchAttributes;
 class MatchAttributesTest extends \PHPUnit\Framework\TestCase {
 
 	/**
-	 *
 	 * @param array $ruledefinition
 	 * @param array $attribs
 	 * @param bool $expected
