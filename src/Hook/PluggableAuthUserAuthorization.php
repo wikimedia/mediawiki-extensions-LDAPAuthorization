@@ -114,6 +114,9 @@ class PluggableAuthUserAuthorization {
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function initDomainFromAuthenticationSessionData() {
 		if ( !class_exists( '\MediaWiki\Extension\LDAPAuthentication2\PluggableAuth' ) ) {
 			return false;
@@ -135,6 +138,9 @@ class PluggableAuthUserAuthorization {
 		return true;
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function initDomainFromUserDomainStore() {
 		$userDomainStore = new UserDomainStore(
 			MediaWikiServices::getInstance()->getDBLoadBalancer()
