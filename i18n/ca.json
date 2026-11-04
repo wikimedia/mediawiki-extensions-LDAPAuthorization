@@ -1,0 +1,15 @@
+{
+        "@metadata": {
+                "authors": [
+                        "Ajuntament de Benicarló - correu.informatica@benicarlo.org"
+                ]
+        },
+        "ldapprovider-desc": "Proporciona una infraestructura comuna per connectar-se a un recurs LDAP i executar-hi consultes",
+        "ldapprovider-config-clientregistry": "Permet el registre de clients personalitzats",
+        "ldapprovider-config-domainconfigs": "Emmagatzema les configuracions per domini",
+        "ldapprovider-domain-config-not-found": "No s'ha pogut accedir al fitxer de configuració '$1'!\n\nPer favor, configureu un fitxer de configuració de domini per a l'extensió LDAPProvider.",
+        "ldapprovider-more-than-one": "S'ha trobat més d'un usuari per a '$1'",
+        "ldapprovider-config-domainconfigprovider": "Especifica el mecanisme per obtenir la configuració del domini",
+        "ldapprovider-config-defaultdomain": "Especifica quin domini triar per a un usuari, si no hi ha cap mapatge disponible a la base de dades",
+        "ldapprovider-domain-config-invalid": "El fitxer de configuració '$1' té errors de sintaxi!"
+}
